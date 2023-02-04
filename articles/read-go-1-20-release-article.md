@@ -10,9 +10,7 @@ published: false
 2023年2月1日にGo 1.20がリリースされ、The Go Blogにてリリース告知の記事が投稿されました。
 本記事ではブログの翻訳を記載して行きます。誤訳等や読みづらい点がありましたらコメント/Githubのissueにご連絡いただけると幸いです。
 
-// TODO: 埋め込み確認
 https://go.dev/blog/go1.20
-[url](https://go.dev/blog/go1.20)
 
 Go 1.20の詳細な機能説明に関しては、リリース告知ではなくリリースノートをご覧ください。
 https://go.dev/doc/go1.20
@@ -29,14 +27,18 @@ Robert Griesemer, on behalf of the Go team
 1 February 2023
 `
 
+---
+
 本日、Go開発チームは Go 1.20をリリースすることを嬉しく思います。
 ダウンロードは[こちら](https://go.dev/dl/)からすることが可能です。
 
 開発期間の延長のおかげで、本バージョンではより早期段階での幅広いテストとコードベースの全体的な安定性の向上を実現しました。
 
-`Today the Go team is thrilled to release Go 1.20, which you can get by visiting the download page.
+`
+Today the Go team is thrilled to release Go 1.20, which you can get by visiting the download page.
 
-Go 1.20 benefited from an extended development phase, made possible by earlier broad testing and improved overall stability of the code base.`
+Go 1.20 benefited from an extended development phase, made possible by earlier broad testing and improved overall stability of the code base.
+`
 
 ::: message
 thrilled: (形)わくわくした、興奮した
@@ -44,8 +46,10 @@ benefit: (自動)利益を得る ここでは Go 1.20 にかかる 過去分詞�
 made possible by ~ : ~によって実現可能となる
 :::
 
+---
+
 特に、PGOのプレビューサポート機能をリリースできたことを嬉しく思います。
-PGOとは実行時間のプロファイル情報に基づき、コンパイラがアプリケーションや作業負荷に特化した最適化を可能とするものです。
+PGOとは実行時間のプロファイル情報に基づき、コンパイラがアプリケーションや作業負荷に特化した最適化を行うようにできるものです。
 
 `
 We’re particularly excited to launch a preview of profile-guided optimization (PGO), which enables the compiler to perform application- and workload-specific optimizations based on run-time profile information.
@@ -53,13 +57,38 @@ We’re particularly excited to launch a preview of profile-guided optimization 
 
 ::: message
 PGO: Profile-Guided Optimization コンパイラ最適化の手法 詳細は[こちら](https://go.dev/doc/pgo)
-application-specific: (形) アプリケーションに特化した ここではapplcation-とworkload- が specificにかかっている
+application-specific: (形)アプリケーションに特化した ここではapplcation-とworkload- が specificにかかっている
+providing: ここではprovide(提供する)の動名詞。
 :::
+
+---
+
+go buildにプロファイルを提供することで、コンパイラは典型的なアプリケーションをコンパイルする時間が約3~4%早くなります。また、将来のリリースではより一層PGOの恩恵を受けることができると予想しています。
+
+これはPGOサポートのプレビューリリースなので、皆さんにぜひ試していただきたいです。しかし、まだ荒削りな部分が残っているので商用環境では使用しない方が良いでしょう。
+
+
+```
+Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.
+
+Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
+```
+
+::: message
+providing: ここではprovide(提供する)の動名詞。Providing ~ go buildまでが主語。接続詞用法もある点に注意(~という条件で)。
+even more: どちらもbenefitにかかる副詞。より一層
+
+since: (接)~なので becauseとほぼ同義。前置詞でも使える
+preview release: 新しい機能を、ユーザーに体験してもらう目的で、開発中のソフトウェアを一般に公開すること、または、公開されたものである。 - [Weblio辞書](https://www.weblio.jp/content/preview+release)より引用
+folk: (名)人々 
+preclude: (動)不可能にする ここではrough edgesが商用利用を不可能にするというニュアンス 
+:::
+
 
 // ここまで
 
 
- Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO. Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
+ 
 
 Go 1.20 also includes a handful of language changes, many improvements to tooling and the library, and better overall performance.
 
@@ -92,39 +121,3 @@ For a complete and more detailed list of all changes see the full release notes.
 Thanks to everyone who contributed to this release by writing code, filing bugs, sharing feedback, and testing the release candidates. Your efforts helped to ensure that Go 1.20 is as stable as possible. As always, if you notice any problems, please file an issue.
 
 Enjoy Go 1.20!
-
-Previous article: Share your feedback about developing with Go
-Blog Index
-
-Why Go
-Use Cases
-Case Studies
-Get Started
-Playground
-Tour
-Stack Overflow
-Help
-Packages
-Standard Library
-About Go Packages
-About
-Download
-Blog
-Issue Tracker
-Release Notes
-Brand Guidelines
-Code of Conduct
-Connect
-Twitter
-GitHub
-Slack
-r/golang
-Meetup
-Golang Weekly
-The Go Gopher
-Copyright
-Terms of Service
-Privacy Policy
-Report an Issue
-System theme
-Google logo
