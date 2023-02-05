@@ -1,5 +1,5 @@
 ---
-title: "Go1.20リリースお知らせ記事を読んでいく(後編)"
+title: "Go1.20リリースお知らせ記事を翻訳する(後編)"
 emoji: "😃"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["go","English","英語"]
