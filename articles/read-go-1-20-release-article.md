@@ -80,6 +80,7 @@ preclude: (動)不可能にする ここではrough edgesが商用利用を不�
 :::
 
 ---
+
 Go 1.20では、複数のツールとライブラリの改善や全体的なパフォーマンスの改善をするための細かな言語の変更も含まれています。
 
 > Go 1.20 also includes a handful of language changes, many improvements to tooling and the library, and better overall performance.
@@ -100,10 +101,10 @@ predeclare: (動)前もって宣言する,先行宣言。pre-(あらかじめ) +
 constraint: (名)制約
 :::
 
-<! -- ここでの"generic code"が汎用コードのことなのか、Go 1.18で追加されたGenerics を用いたコードを指しているのかが分からず -->
+<!-- ここでの"generic code"が汎用コードのことなのか、Go 1.18で追加されたGenerics を用いたコードを指しているのかが分からず -->
 
 ---
-> SliceData型、String型、StringData型がunsafeパッケージに追加されました。これらは一連の実装に依存しないslice関数や文字列操作関数を完成させます。
+- SliceData型、String型、StringData型がunsafeパッケージに追加されました。これらは一連の実装に依存しないslice関数や文字列操作関数を完成させます。
 
 > - The functions SliceData, String, and StringData have been added to package unsafe. They complete the set of functions for implementation-independent slice and string manipulation.
 
@@ -113,7 +114,7 @@ string manipulation: 文字列操作
 
 ---
 
-Go言語の型変換ルールが拡張されました。スライスを直接配列に変換することができるようになります。
+- Go言語の型変換ルールが拡張されました。スライスを直接配列に変換することができるようになります。
 
 > - Go’s type conversion rules have been extended to permit direct conversion from a slice to an array.
 
@@ -123,7 +124,7 @@ conversion: (名)変換
 
 ---
 
-配列や構造体が比較される際、正確な順序を比較する厳格な順序が定義されました。これによって、比較処理内でpanicが発生した際に何が起こったのかがわかりやすくなります。
+- 配列や構造体が比較される際、正確な順序を比較する厳格な順序が定義されました。これによって、比較処理内でpanicが発生した際に何が起こったのかがわかりやすくなります。
 
 > - The language specification now defines the exact order in which array elements and struct fields are compared. This clarifies what happens in case of panics during comparisons.
 
@@ -133,21 +134,73 @@ clarify: (動)明らかにする
 :::
 
 
-// ここまで
+## ツールの改善
+- coverツールは単体試験だけでなく、全体のカバレッジプロファイルを集めることができるようになりました。
+
+> - The cover tool now can collect coverage profiles of whole programs, not just of unit tests.
+
+
+---
+
+- goツールは `$GOROOT/pkg` ディレクトリ内にある事前のコンパイル済みの標準ライブラリに依存しなくなりました。配布物に同梱されなくなったので、結果的にダウンロードする容量が小さくなりました。代わりに、必要に応じて他のパッケージ同様に標準ライブラリがビルドとキャッシュされます。
+
+> - The go tool no longer relies on pre-compiled standard library package archives in the $GOROOT/pkg directory, and they are no longer shipped with the distribution, resulting in smaller downloads. Instead, packages in the standard library are built as needed and cached in the build cache, like other packages.
+
+---
+- `go test -json`の実装は、stdoutへまばらな書き込みが行われる場合、より堅牢になるように改良されました。
+
+> - The implementation of go test -json has been improved to make it more robust in the presence of stray writes to stdout.
+
+::: message
+robust: (形)強固な
+stray: (形)まばらな
+:::
+
+<!-- strayは何にかかっている？-->
+
+---
+
+- `go build`,`go install`や他のビルドに関連するコマンドは、プログラム全体をカバレッジ分析できる`-cover`フラグと、プロファイルに基づく最適化`-pgo`フラグを使用できるようになりました。
+
+> - The go build, go install, and other build-related commands now accept a -pgo flag enabling profile-guided optimizations as well as a -cover flag for whole-program coverage analysis.
+
+::: message
+as well as: ~と同様に
+coverage analysis: 網羅条件がどれだけ実行されたかの割合を分析
+:::
+
+---
+
+- Cツールチェインがないシステムでは、goコマンドはcgoを無効化するようになりました。
+その結果、Cコンパイラなしで Goをインストールした時、オプションとしてcgoを使用する標準ライブラリのパッケージのために、削除された事前に配布されたパッケージアーカイブを使用する代わりに純粋なGo buildsを使用するようになります。
+
+> - The go command now disables cgo by default on systems without a C toolchain. Consequently, when Go is installed on a system without a C compiler, it will now use pure Go builds for packages in the standard library that optionally use cgo, instead of using pre-distributed package archives (which have been removed, as noted above).
+
+::: message
+toolchain: (名)ソフトウェア開発のために必要な特定の機能を持つコンピュータプログラムの集合を指すことが多い。[e-words](https://e-words.jp/w/%E3%83%84%E3%83%BC%E3%83%AB%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3.html)より引用
+Consequently: (副)その結果
+:::
+
+---
+
+- `vet tool`は、テストを並列実行する際に発生する可能性のあるループする参照変数のミスをより多く報告します。
+
+> - The vet tool reports more loop variable reference mistakes that may occur in tests running in parallel.
 
 
 ::: message
-
+variable: (名)変数
+reference: (名)参照
 :::
 
+---
 
-Tool improvements
-The cover tool now can collect coverage profiles of whole programs, not just of unit tests.
-The go tool no longer relies on pre-compiled standard library package archives in the $GOROOT/pkg directory, and they are no longer shipped with the distribution, resulting in smaller downloads. Instead, packages in the standard library are built as needed and cached in the build cache, like other packages.
-The implementation of go test -json has been improved to make it more robust in the presence of stray writes to stdout.
-The go build, go install, and other build-related commands now accept a -pgo flag enabling profile-guided optimizations as well as a -cover flag for whole-program coverage analysis.
-The go command now disables cgo by default on systems without a C toolchain. Consequently, when Go is installed on a system without a C compiler, it will now use pure Go builds for packages in the standard library that optionally use cgo, instead of using pre-distributed package archives (which have been removed, as noted above).
-The vet tool reports more loop variable reference mistakes that may occur in tests running in parallel.
+
+// ここまで
+
+
+
+
 Standard library additions
 The new crypto/ecdh package provides explicit support for Elliptic Curve Diffie-Hellman key exchanges over NIST curves and Curve25519.
 The new function errors.Join returns an error wrapping a list of errors which may be obtained again if the error type implements the Unwrap() []error method.
