@@ -21,23 +21,22 @@ https://go.dev/doc/go1.20
 2023年 2月 1日 
 Go開発チーム代表 Robert Griesemer
 
-`
-Go 1.20 is released!
-Robert Griesemer, on behalf of the Go team
+
+> Go 1.20 is released!  
+> Robert Griesemer, on behalf of the Go team
 1 February 2023
-`
+
 
 ---
 
 本日、Go開発チームは Go 1.20をリリースすることを嬉しく思います。
 ダウンロードは[こちら](https://go.dev/dl/)からすることが可能です。
-
 開発期間の延長のおかげで、本バージョンではより早期段階での幅広いテストとコードベースの全体的な安定性の向上を実現しました。
 
-`
-Today the Go team is thrilled to release Go 1.20, which you can get by visiting the download page.
-Go 1.20 benefited from an extended development phase, made possible by earlier broad testing and improved overall stability of the code base.
-`
+
+> Today the Go team is thrilled to release Go 1.20, which you can get by visiting the download page.  
+> Go 1.20 benefited from an extended development phase, made possible by earlier broad testing and improved overall stability of the code base.
+
 
 ::: message
 thrilled: (形)わくわくした、興奮した
@@ -48,6 +47,7 @@ made possible by ~ : ~によって実現可能となる
 ---
 
 特に、PGOのプレビューサポート機能をリリースできたことを嬉しく思います。
+
 PGOとは実行時間のプロファイル情報に基づき、コンパイラがアプリケーションや作業負荷に特化した最適化を行うようにできるものです。
 
 `
@@ -67,10 +67,10 @@ go buildにプロファイルを提供することで、コンパイラは典型
 これはPGOサポートのプレビューリリースなので、皆さんにぜひ試していただきたいです。しかし、まだ荒削りな部分が残っているので商用環境では使用しない方が良いでしょう。
 
 
-```
-Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.
+`
+Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.  
 Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
-```
+`
 
 ::: message
 providing: ここではprovide(提供する)の動名詞。Providing ~ go buildまでが主語。接続詞用法もある点に注意(~という条件で)。
