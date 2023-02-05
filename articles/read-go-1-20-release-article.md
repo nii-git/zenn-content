@@ -67,7 +67,6 @@ PGOとは実行時間のプロファイル情報に基づき、コンパイラ�
 ::: message
 PGO: Profile-Guided Optimization コンパイラ最適化の手法。詳細は[こちら](https://go.dev/doc/pgo)
 application-specific: (形)アプリケーションに特化した ここではapplcation-とworkload- が specificにかかっている
-providing: ここではprovide(提供する)の動名詞。
 :::
 
 ---

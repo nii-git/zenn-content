@@ -15,7 +15,7 @@ published: false
 https://zenn.dev/nii/articles/read-go-1-20-release-article
 
 2023年2月1日にGo 1.20がリリースされ、The Go Blogにてリリース告知の記事が投稿されました。
-本記事ではブログの翻訳を記載して行きます。誤訳等や読みづらい点がありましたらコメント/Githubのissueにご連絡いただけると幸いです。
+本記事ではブログの翻訳を記載します。誤訳等や読みづらい点がありましたらコメント/Githubのissueにご連絡いただけると幸いです。
 
 https://go.dev/blog/go1.20
 
