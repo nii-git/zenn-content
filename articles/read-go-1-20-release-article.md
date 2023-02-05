@@ -30,7 +30,7 @@ Go開発チーム代表 Robert Griesemer
 ---
 
 本日、Go開発チームは Go 1.20をリリースすることを嬉しく思います。
-ダウンロードは[こちら](https://go.dev/dl/)からすることが可能です。
+ダウンロードは[こちら](https://go.dev/dl/)からすることが可能です。  
 開発期間の延長のおかげで、本バージョンではより早期段階での幅広いテストとコードベースの全体的な安定性の向上を実現しました。
 
 
@@ -46,31 +46,28 @@ made possible by ~ : ~によって実現可能となる
 
 ---
 
-特に、PGOのプレビューサポート機能をリリースできたことを嬉しく思います。
-
+特に、PGOのプレビューサポート機能をリリースできたことを嬉しく思います。  
 PGOとは実行時間のプロファイル情報に基づき、コンパイラがアプリケーションや作業負荷に特化した最適化を行うようにできるものです。
 
-`
-We’re particularly excited to launch a preview of profile-guided optimization (PGO), which enables the compiler to perform application- and workload-specific optimizations based on run-time profile information.
-`
+> We’re particularly excited to launch a preview of profile-guided optimization (PGO), which enables the compiler to perform application- and workload-specific optimizations based on run-time profile information.
+
 
 ::: message
-PGO: Profile-Guided Optimization コンパイラ最適化の手法 詳細は[こちら](https://go.dev/doc/pgo)
+PGO: Profile-Guided Optimization コンパイラ最適化の手法。詳細は[こちら](https://go.dev/doc/pgo)
 application-specific: (形)アプリケーションに特化した ここではapplcation-とworkload- が specificにかかっている
 providing: ここではprovide(提供する)の動名詞。
 :::
 
 ---
 
-go buildにプロファイルを提供することで、コンパイラは典型的なアプリケーションをコンパイルする時間が約3~4%早くなります。また、将来のリリースではより一層PGOの恩恵を受けることができると予想しています。
-
+go buildにプロファイルを提供することで、コンパイラは典型的なアプリケーションをコンパイルする時間が約3~4%早くなります。また、将来のリリースではより一層PGOの恩恵を受けることができると予想しています。  
 これはPGOサポートのプレビューリリースなので、皆さんにぜひ試していただきたいです。しかし、まだ荒削りな部分が残っているので商用環境では使用しない方が良いでしょう。
 
 
-`
-Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.  
-Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
-`
+
+> Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.  
+> Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
+
 
 ::: message
 providing: ここではprovide(提供する)の動名詞。Providing ~ go buildまでが主語。接続詞用法もある点に注意(~という条件で)。
@@ -82,19 +79,68 @@ folk: (名)人々
 preclude: (動)不可能にする ここではrough edgesが商用利用を不可能にするというニュアンス 
 :::
 
+---
+Go 1.20では、複数のツールとライブラリの改善や全体的なパフォーマンスの改善をするための細かな言語の変更も含まれています。
+
+> Go 1.20 also includes a handful of language changes, many improvements to tooling and the library, and better overall performance.
+
+::: message
+handful: (名)少量,ひとつかみ
+ :::
+
+
+## 言語の変更
+
+- 先に宣言されたcomparable制約は、インターフェースのような一般的なcomparable型によっても満たされるようになりました。これによって、ジェネリックコードを単純化することができます。
+
+> - The predeclared comparable constraint is now also satisfied by ordinary comparable types, such as interfaces, which will simplify generic code.  
+
+::: message
+predeclare: (動)前もって宣言する,先行宣言。pre-(あらかじめ) + declare(宣言する)
+constraint: (名)制約
+:::
+
+<! -- ここでの"generic code"が汎用コードのことなのか、Go 1.18で追加されたGenerics を用いたコードを指しているのかが分からず -->
+
+---
+> SliceData型、String型、StringData型がunsafeパッケージに追加されました。これらは一連の実装に依存しないslice関数や文字列操作関数を完成させます。
+
+> - The functions SliceData, String, and StringData have been added to package unsafe. They complete the set of functions for implementation-independent slice and string manipulation.
+
+::: message
+string manipulation: 文字列操作
+:::
+
+---
+
+Go言語の型変換ルールが拡張されました。スライスを直接配列に変換することができるようになります。
+
+> - Go’s type conversion rules have been extended to permit direct conversion from a slice to an array.
+
+::: message
+conversion: (名)変換
+:::
+
+---
+
+配列や構造体が比較される際、正確な順序を比較する厳格な順序が定義されました。これによって、比較処理内でpanicが発生した際に何が起こったのかがわかりやすくなります。
+
+> - The language specification now defines the exact order in which array elements and struct fields are compared. This clarifies what happens in case of panics during comparisons.
+
+::: message
+specification: (名)仕様
+clarify: (動)明らかにする
+:::
+
 
 // ここまで
 
 
- 
+::: message
 
-Go 1.20 also includes a handful of language changes, many improvements to tooling and the library, and better overall performance.
+:::
 
-Language changes
-The predeclared comparable constraint is now also satisfied by ordinary comparable types, such as interfaces, which will simplify generic code.
-The functions SliceData, String, and StringData have been added to package unsafe. They complete the set of functions for implementation-independent slice and string manipulation.
-Go’s type conversion rules have been extended to permit direct conversion from a slice to an array.
-The language specification now defines the exact order in which array elements and struct fields are compared. This clarifies what happens in case of panics during comparisons.
+
 Tool improvements
 The cover tool now can collect coverage profiles of whole programs, not just of unit tests.
 The go tool no longer relies on pre-compiled standard library package archives in the $GOROOT/pkg directory, and they are no longer shipped with the distribution, resulting in smaller downloads. Instead, packages in the standard library are built as needed and cached in the build cache, like other packages.
