@@ -36,7 +36,6 @@ Robert Griesemer, on behalf of the Go team
 
 `
 Today the Go team is thrilled to release Go 1.20, which you can get by visiting the download page.
-
 Go 1.20 benefited from an extended development phase, made possible by earlier broad testing and improved overall stability of the code base.
 `
 
@@ -70,7 +69,6 @@ go buildにプロファイルを提供することで、コンパイラは典型
 
 ```
 Providing a profile to go build enables the compiler to speed up typical applications by around 3–4%, and we expect future releases to benefit even more from PGO.
-
 Since this is a preview release of PGO support, we encourage folks to try it out, but there are still rough edges which may preclude production use.
 ```
 
