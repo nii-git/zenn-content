@@ -1,6 +1,5 @@
 ---
-title: "test"
-published: false
+title: "test1"
 ---
 
 これはテスト本です。
