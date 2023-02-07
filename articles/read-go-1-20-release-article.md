@@ -66,7 +66,7 @@ PGOとは実行時間のプロファイル情報に基づき、コンパイラ�
 
 ::: message
 PGO: Profile-Guided Optimization コンパイラ最適化の手法。詳細は[こちら](https://go.dev/doc/pgo)
-application-specific: (形)アプリケーションに特化した ここではapplcation-とworkload- が specificにかかっている
+-specific: (形)-に特化した ここではapplcation-とworkload- が specificにかかっている
 :::
 
 ---
@@ -80,7 +80,7 @@ go buildにプロファイルを提供することで、コンパイラは典型
 ::: message
 providing: ここではprovide(提供する)の動名詞。Providing ~ go buildまでが主語。接続詞用法もある点に注意(~という条件で)。
 even more: どちらもbenefitにかかる副詞。より一層
-since: (接)~なので becauseとほぼ同義。
+since: (接)~なので。becauseとほぼ同義。
 preview release: 新しい機能を、ユーザーに体験してもらう目的で、開発中のソフトウェアを一般に公開すること、または、公開されたものである。 - [Weblio辞書](https://www.weblio.jp/content/preview+release)より引用
 folk: (名)人々 
 preclude: (動)不可能にする。ここではrough edgesが商用利用を不可能にするというニュアンス
