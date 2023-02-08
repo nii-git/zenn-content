@@ -205,5 +205,5 @@ reference: (名)参照
 
 ## 後編
 
-現在作成中です。
+https://zenn.dev/nii/articles/read-go-1-20-release-article2
 
