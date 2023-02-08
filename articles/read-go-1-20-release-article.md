@@ -25,7 +25,7 @@ https://go.dev/doc/go1.20
 - 言語の変更
 - ツールの改善
 
-### 後編([次回記事](https://zenn.dev/nii/articles/read-go-1-20-release-article))
+### 後編([次回記事](https://zenn.dev/nii/articles/read-go-1-20-release-article2))
 
 - 標準ライブラリの追加
 - パフォーマンスの向上
