@@ -43,7 +43,7 @@ https://go.dev/doc/go1.20
 
 ::: message
 explicit: (形)明白な
-Elliptic Curve Diffie-Hellman key exchanges: 楕円曲線ディフィー・ヘルマン鍵共有のこと。事前の秘密の共有無しに、盗聴の可能性のある通信路を使って、暗号鍵の共有を可能にする、公開鍵暗号方式の暗号プロトコルである。[wikipedia](https://ja.wikipedia.org/wiki/%E6%A5%95%E5%86%86%E6%9B%B2%E7%B7%9A%E3%83%87%E3%82%A3%E3%83%95%E3%82%A3%E3%83%BC%E3%83%BB%E3%83%98%E3%83%AB%E3%83%9E%E3%83%B3%E9%8D%B5%E5%85%B1%E6%9C%89)より引用
+Elliptic Curve Diffie-Hellman key exchanges: 楕円曲線ディフィー・ヘルマン鍵共有のこと。事前の秘密の共有無しに、盗聴の可能性のある通信路を使って、暗号鍵の共有を可能にする、公開鍵暗号方式の暗号プロトコルである。([wikipedia](https://ja.wikipedia.org/wiki/%E6%A5%95%E5%86%86%E6%9B%B2%E7%B7%9A%E3%83%87%E3%82%A3%E3%83%95%E3%82%A3%E3%83%BC%E3%83%BB%E3%83%98%E3%83%AB%E3%83%9E%E3%83%B3%E9%8D%B5%E5%85%B1%E6%9C%89)より引用)
 :::
 
 ---
@@ -100,7 +100,7 @@ associate: (動)関連づける。ここではContextにかかる過去分詞の
 > - Compiler and garbage collector improvements have reduced memory overhead and improved overall CPU performance by up to 2%.
 
 ::: message
-overhead: オーバーヘッドのこと。あるコンピューターの処理を実行するのに付随する作業を指すものである。たいていは、処理に時間がかかるようになるなど、システムの負荷になるものを指す。[IT用語辞典バイナリ](https://www.sophia-it.com/content/%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%98%E3%83%83%E3%83%89)より引用
+overhead: オーバーヘッドのこと。あるコンピューターの処理を実行するのに付随する作業を指すものである。たいていは、処理に時間がかかるようになるなど、システムの負荷になるものを指す。([IT用語辞典バイナリ](https://www.sophia-it.com/content/%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%98%E3%83%83%E3%83%89)より引用)
 :::
 
 - 特にコンパイルをターゲットにする作業により、ビルドが10%程度早くなりました。これによって、Go1.17の時と同じ程度のスピードでビルドできます。
@@ -111,24 +111,49 @@ overhead: オーバーヘッドのこと。あるコンピューターの処理�
 in line with~: ~と一致して
 :::
 
----
-
-::: message
-
-:::
-
-
-
-
-
-
-
 
 ## あとがき
-When building a Go release from source, Go 1.20 requires a Go 1.17.13 or newer release. In the future, we plan to move the bootstrap toolchain forward approximately once a year. Also, starting with Go 1.21, some older operating systems will no longer be supported: this includes Windows 7, 8, Server 2008 and Server 2012, macOS 10.13 High Sierra, and 10.14 Mojave. On the other hand, Go 1.20 adds experimental support for FreeBSD on RISC-V.
+Goリリースをソースからビルドする際、Go1.17.13より新しいバージョンが必要です。将来的にはbootstrap toolchainを約１年に１度改良します。
 
-For a complete and more detailed list of all changes see the full release notes.
+> When building a Go release from source, Go 1.20 requires a Go 1.17.13 or newer release. In the future, we plan to move the bootstrap toolchain forward approximately once a year.
 
-Thanks to everyone who contributed to this release by writing code, filing bugs, sharing feedback, and testing the release candidates. Your efforts helped to ensure that Go 1.20 is as stable as possible. As always, if you notice any problems, please file an issue.
+::: message
+approximately: (副)おおよそ
+:::
 
-Enjoy Go 1.20!
+---
+また、Go1.21が始まる時、下記の古いOSはサポート外になります：
+- Windows 7,8
+- Windows Server 2008,2012
+- macOS 10.13(High Sierra), 10.14(Mojave)
+
+一方で、RISC-Vで動くFreeBSD OSを実験的にサポートしています。
+
+> Also, starting with Go 1.21, some older operating systems will no longer be supported: this includes Windows 7, 8, Server 2008 and Server 2012, macOS 10.13 High Sierra, and 10.14 Mojave. On the other hand, Go 1.20 adds experimental support for FreeBSD on RISC-V.
+
+::: message
+FreeBSD: FreeBSD は、最新のサーバ、デスクトップおよび組み込み プラットフォーム 用のオペレーティングシステムです。([FreeBSD公式ページ](https://www.freebsd.org/ja/)より引用)
+:::
+
+---
+詳細な変更点はリリースノートを参照してください。
+https://go.dev/doc/go1.20
+
+> For a complete and more detailed list of all changes see the full release notes.
+
+---
+コードを書いてくださった方、バグをファイリングしてくださった方、フィードバックを送ってくださった方、そしてリリース候補版をテストしてくださったコントリビューターの皆様にお礼を申し上げます。
+
+皆様の貢献により、Go 1.20を可能なかぎり安定させることができました。いつも通り、何か問題があればissueとして起票してください。
+
+> Thanks to everyone who contributed to this release by writing code, filing bugs, sharing feedback, and testing the release candidates. Your efforts helped to ensure that Go 1.20 is as stable as possible. As always, if you notice any problems, please file an issue.
+
+::: message
+file: (動)整理する 
+release candidates: リリース候補版。製品などの最終状態にきわめて近いテストバージョン。ベータテストなどのあとに、評価やテスト（特に利用者側環境でのテスト）を目的に、製品とほぼ同等の状態のバージョンが配布されることがあり、そのときのバージョンをこのように呼ぶ。([Weblio辞書](https://www.weblio.jp/content/Release+Candidate)より引用)
+:::
+
+---
+Go 1.20を楽しんでください！
+
+> Enjoy Go 1.20!
