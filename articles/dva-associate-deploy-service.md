@@ -77,7 +77,7 @@ https://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/getting-started-cc
 ::: message
 Gitバージョンが1.7.9以上であることを確認してください。
 > Git バージョン 1.7.9 以降をサポートしています。Git バージョン 2.28 は、初期コミットのブランチ名の構成をサポートしています。
-```shell:terminal
+```text:terminal
 $ git --version
 git version 2.37.1 (Apple Git-137.1)
 ```
@@ -89,7 +89,7 @@ git version 2.37.1 (Apple Git-137.1)
 
 その後、上記で作成したリポジトリをcloneします。username,passはGit認証情報のCSVを参考にしてください。
 
-```shell:terminal
+```text:terminal
 $ git clone https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/{repoName}
 Cloning into 'dva-sample'...
 Username for 'https://git-codecommit.ap-northeast-1.amazonaws.com': ******
@@ -173,19 +173,23 @@ artifacts:
     files:
       - server
 ```
+
+::: message
+goのバージョンは1.18までしか対応していない点に注意(2/16現在)
+:::
 :::
 
 次に、ローカル環境で `buildspec.yml`をテストできる環境を構築します。
 詳細は[公式ドキュメント](https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/use-codebuild-agent.html)を参照してください。
 
 ビルドイメージをpullします。
-``` shell:terminalterminal
+``` text:terminalterminal
 $ docker pull public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 
  #公式ドキュメントだと3.0になっている点に注意
 ```
 
 エージェントをpullします。
-```shell:terminalterminal
+```text:terminalterminal
 # CPUプロセッサーの確認
 $ uname -m
 arm64
@@ -197,7 +201,7 @@ $ docker pull public.ecr.aws/codebuild/local-builds:aarch64
 ```
 
 スクリプトをダウンロードします。
-``` shell:terminalterminal
+``` text:terminalterminal
 $ curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
 $ chmod +x codebuild_build.sh
 ```
