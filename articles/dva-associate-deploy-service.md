@@ -31,15 +31,15 @@ AWSでは、ルートユーザを最初のIAMユーザーを作成する時だ�
 
 `IAM > ユーザー > ユーザーを追加` に移動し、コンソールアクセスを有効化にチェックを入れてください。
 
-![コンソールアクセスを有効化にする](../images/dva-associate-deploy-service/screenshot-2023-02-12-9.46.09.png)
+![コンソールアクセスを有効化にする](/images/dva-associate-deploy-service/screenshot-2023-02-12-9.46.09.png)
 
 許可ポリシーは一旦 `AdministratorAccess` 権限とします。
 
-![権限はAdministratorAccessとする](../images/dva-associate-deploy-service/screenshot-2023-02-12-9.38.09.png)
+![権限はAdministratorAccessとする](/images/dva-associate-deploy-service/screenshot-2023-02-12-9.38.09.png)
 
 設定したメールアドレスとIDでログインし、IAMユーザーになっていることを確認してください。
 
-![IAMユーザー確認](../images/dva-associate-deploy-service/screenshot-2023-02-12-9.48.51.png)
+![IAMユーザー確認](/images/dva-associate-deploy-service/screenshot-2023-02-12-9.48.51.png)
 
 ## AWS CodeCommit
 ### 概要
@@ -55,7 +55,7 @@ https://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/getting-started-cc
 
 名前と説明を入力し、作成ボタンを押下します。
 
-![リポジトリ作成](../images/dva-associate-deploy-service/screenshot-2023-02-12-9.24.38.png)
+![リポジトリ作成](/images/dva-associate-deploy-service/screenshot-2023-02-12-9.24.38.png)
 
 作成は以上で完了です。簡単ですね。
 
@@ -85,7 +85,7 @@ git version 2.37.1 (Apple Git-137.1)
 
 `IAM > User > セキュリティ認証情報 > AWS CodeCommit の HTTPS Git 認証情報 > 作成 > csv` より認証情報をダウンロードします。
 
-![Git認証情報生成](../images/dva-associate-deploy-service/screenshot-2023-02-12-10.02.55.png)
+![Git認証情報生成](/images/dva-associate-deploy-service/screenshot-2023-02-12-10.02.55.png)
 
 その後、上記で作成したリポジトリをcloneします。username,passはGit認証情報のCSVを参考にしてください。
 
@@ -106,10 +106,10 @@ dva-sample aws_new_user_credentials.csv
 初期設定が完了した後は、ローカルでブランチを作成したりコミットしたり操作してみます。
 
 適当にコミットした例(Visual StudioのGit Grpah拡張機能を使用)
-![コミット例](../images/dva-associate-deploy-service/screenshot-2023-02-16-9.56.54.png)
+![コミット例](/images/dva-associate-deploy-service/screenshot-2023-02-16-9.56.54.png)
 
 gitを操作するとCodeCommitにも反映されていることがわかります。
-![CodeCommitにも反映されている](../images/dva-associate-deploy-service/screenshot-2023-02-16-9.59.00.png)
+![CodeCommitにも反映されている](/images/dva-associate-deploy-service/screenshot-2023-02-16-9.59.00.png)
 
 
 ### 試験に関して
