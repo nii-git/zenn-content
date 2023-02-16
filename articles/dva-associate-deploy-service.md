@@ -77,7 +77,7 @@ https://docs.aws.amazon.com/ja_jp/codecommit/latest/userguide/getting-started-cc
 ::: message
 Gitバージョンが1.7.9以上であることを確認してください。
 > Git バージョン 1.7.9 以降をサポートしています。Git バージョン 2.28 は、初期コミットのブランチ名の構成をサポートしています。
-```terminal
+```shell:terminal
 $ git --version
 git version 2.37.1 (Apple Git-137.1)
 ```
@@ -89,7 +89,7 @@ git version 2.37.1 (Apple Git-137.1)
 
 その後、上記で作成したリポジトリをcloneします。username,passはGit認証情報のCSVを参考にしてください。
 
-```terminal
+```shell:terminal
 $ git clone https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/{repoName}
 Cloning into 'dva-sample'...
 Username for 'https://git-codecommit.ap-northeast-1.amazonaws.com': ******
@@ -113,7 +113,7 @@ gitを操作するとCodeCommitにも反映されていることがわかりま�
 
 
 ::: details 使用したソース
-``` server.go
+``` go:server.go
 package main
 
 import (
@@ -157,7 +157,7 @@ https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/build-spec-ref.html
 本来はテストを記載するはずだが、今回はビルドエラーが出ないかを確認する
 CodeCommitで使用したソースコードをビルドします
 ::: details 使用するbuildspec.yml
-``` buildspec.yml 
+``` yaml:buildspec.yml 
 version: 0.2
 
 phases:
@@ -179,13 +179,13 @@ artifacts:
 詳細は[公式ドキュメント](https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/use-codebuild-agent.html)を参照してください。
 
 ビルドイメージをpullします。
-``` terminal
+``` shell:terminalterminal
 $ docker pull public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 
  #公式ドキュメントだと3.0になっている点に注意
 ```
 
 エージェントをpullします。
-```terminal
+```shell:terminalterminal
 # CPUプロセッサーの確認
 $ uname -m
 arm64
@@ -197,7 +197,7 @@ $ docker pull public.ecr.aws/codebuild/local-builds:aarch64
 ```
 
 スクリプトをダウンロードします。
-``` terminal
+``` shell:terminalterminal
 $ curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
 $ chmod +x codebuild_build.sh
 ```
