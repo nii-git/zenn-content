@@ -112,6 +112,30 @@ gitを操作するとCodeCommitにも反映されていることがわかりま�
 ![CodeCommitにも反映されている](/images/dva-associate-deploy-service/screenshot-2023-02-16-9.59.00.png)
 
 
+::: details 使用したソース
+``` server.go
+package main
+
+import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+)
+
+func main() {
+	e := echo.New()
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, World!")
+	})
+	e.GET("/sample", func(c echo.Context) error {
+		return c.String(http.StatusOK, "sample")
+	})
+	e.Logger.Fatal(e.Start(":1323"))
+}
+```
+
+:::
+
 ### 試験に関して
 Gitの基本操作がわかっていればなんとかなりそう //todo
 CodeCommit APIの名前も
@@ -124,3 +148,89 @@ CodeCommit APIの名前も
 
 
 ### 使ってみる
+buildspec.ymlがキー
+ビルドに必要な環境の構築や、出力などの設定を定義できる
+
+公式ドキュメントを一読する
+https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/build-spec-ref.html
+
+本来はテストを記載するはずだが、今回はビルドエラーが出ないかを確認する
+CodeCommitで使用したソースコードをビルドします
+::: details 使用するbuildspec.yml
+``` buildspec.yml 
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.18
+  build:
+    commands:
+      - echo Building the Go code...
+      - go build server.go
+artifacts:
+  golang_artifacts:
+    files:
+      - server
+```
+:::
+
+次に、ローカル環境で `buildspec.yml`をテストできる環境を構築します。
+詳細は[公式ドキュメント](https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/use-codebuild-agent.html)を参照してください。
+
+ビルドイメージをpullします。
+``` terminal
+$ docker pull public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 
+ #公式ドキュメントだと3.0になっている点に注意
+```
+
+エージェントをpullします。
+```terminal
+# CPUプロセッサーの確認
+$ uname -m
+arm64
+
+# x86_64 の場合
+$ docker pull public.ecr.aws/codebuild/local-builds:latest
+# armの場合
+$ docker pull public.ecr.aws/codebuild/local-builds:aarch64
+```
+
+スクリプトをダウンロードします。
+``` terminal
+$ curl -O  https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
+$ chmod +x codebuild_build.sh
+```
+
+`buildspec.yml` と同じディレクトリ内で実行します。
+```
+$ ./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 -a ./output -l public.ecr.aws/codebuild/local-builds:aarch64
+```
+
+
+
+//todo このままだとpushして、毎度ビルドを手動で走らせなきゃ　面倒だよね　そんな時にcodecommit
+
+
+```
+　　　　　　　　／￣＼
+　　　　　　　 |　　　 　|
+　　　　　　　　＼＿／
+　　　　　　　　　　|
+　　　　　 　／ ￣ ￣　＼
+　　　　　／　　＼　／　　＼
+　　　 ／　　 ⌒　　　⌒ 　　＼　　　　　　よくぞこのスレを開いてくれた
+　　　 |　　　　（__人__）　　 　　|　　　　　　褒美としてオプーナを買う権利をやる
+　　　 ＼　　　 ｀ ⌒´　　　　／　　　☆
+　　　　/ヽ､--ー､＿＿,-‐´ ＼─／
+　　 ／　> 　　ヽ▼●▼<＼　　||ｰ､.
+　 / ヽ､　　　＼ i　|｡|　|/　 ヽ　(ニ､｀ヽ.
+　.l　　　ヽ 　　　 l　|｡|　| ｒ-､y　｀ﾆ　 ﾉ ＼
+　l　　　　 |　　 　|ー─ | ￣ l 　　｀~ヽ＿ノ＿＿＿_
+　　　　／￣￣￣￣ヽ-'ヽ--'　　／　オープナ　 ／|
+　　　.|￣￣￣￣￣￣|／|　　　 |￣￣￣￣￣￣|／| ＿＿＿＿＿＿
+／￣オプーナ／|　￣|__」／_オープナ　　／|￣|__,」＿＿_　　　　／|
+|￣￣￣￣￣|／オープナ￣／￣￣￣￣|／ オプーナ ／|　　／　.|
+|￣￣￣￣￣|￣￣￣￣￣|／l￣￣￣￣|￣￣￣￣￣|／|　／
+|￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣|
+```
