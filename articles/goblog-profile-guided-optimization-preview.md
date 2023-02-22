@@ -116,6 +116,32 @@ reliable, and efficient software.</p>
 ...
 ```
 
+### プロファイリング
+これで動作するサービスができたので、プロファイルを収集してPGOを用いて再ビルドしてみましょう。パフォーマンスが向上するはずです。
+
+<!-- 
+TODO: 推敲すること
+In main.go, we imported net/http/pprof which automatically adds a /debug/pprof/profile endpoint to the server for fetching a CPU profile.
+-->
+`main.go`内で、CPUプロファイルを収集するため、サーバーに`/debug/pprof/profile`エンドポイントを自動的に追加する[`net/http/pprof`](https://pkg.go.dev/net/http/pprof)をインポートしました。
+
+コンパイラが本番環境での動作を得られるために、一般的には本番環境のプロファイルを集めたいと思うはずです。この例では本番環境を持っていないので、今回はプロファイルを取得する間に負荷をかけるシンプルな動作のプログラムを作りたいと思います。下記のプログラムを`load/main.go`にコピーし、負荷をかけてください(先程実行したサーバーがまだ実行中であることを確認してください)。
+
+https://go.dev/play/p/yYH0kfsZcpL
+
+```
+$ go run example.com/markdown/load
+```
+
+実行中にプロファイルをサーバーからダウンロードしてみましょう。
+```
+$ curl -o cpu.pprof "http://localhost:8080/debug/pprof/profile?seconds=30"
+```
+
+これらが完了したら、サーバーと負荷をかけるプログラムを停止させてください。
+
+### プロファイルを使用してみる
+
 <!-- todo: 実際にサンプルソースを動かす -->
 
 # 関連記事
