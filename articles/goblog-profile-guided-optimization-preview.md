@@ -1,8 +1,8 @@
 ---
-title: "The Go Blog - ガイド付き最適化(PGO)のプレビュー"
+title: "ガイド付き最適化(PGO)のプレビュー/The Go Blog"
 emoji: "😃"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["go","go1.20","翻訳","PGO","最適化"]
+topics: ["go","翻訳","PGO","最適化"]
 published: false
 ---
 
@@ -15,8 +15,6 @@ https://go.dev/blog/pgo-preview
 # Profile-guided optimization preview
 2023年2月8日 Michael Pratt
 
----
-
 Goバイナリをビルドする際、コンパイラはできるだけパフォーマンスが高いバイナリを生成しようと最適化を行います。下記は最適化の一例です。
 - 定数伝播: 定数式をコンパイル時に評価し、実行時の評価時間を削減
 - エスケープ解析: ローカルに割り振られたオブジェクトへのheap割り当てを回避し、ガーベジコレクションのオーバーヘッドを削減
@@ -28,7 +26,7 @@ Go言語はリリースを重ねるごとに最適化を改善していますが
 
 どのコードが本番環境で使われているかの決定的な情報がないので、コンパイラはパッケージのソースコードだけしか操作することができません。しかし我々には本番環境の振る舞いを評価するツールがあります。[プロファイリング](https://go.dev/doc/diagnostics#profiling)です。コンパイルにプロファイルを渡すことができたら、より賢い選択をすることができるでしょう。例えば、より使用される関数を積極的に最適化できたり、より正確に一般的なケースを選択したり、などです。
 
-このように、アプリケーションの振る舞いのプロファイルをコンパイラで使用する手法を`Profile-Guided Optimization`,PGOと呼びます(`Feedback-Directed Optimization`,FDOとも呼ばれます)。
+このように、アプリケーションの振る舞いのプロファイルをコンパイラで使用する手法を`Profile-Guided Optimization`と呼びます(`Feedback-Directed Optimization`とも呼ばれます)。
 
 Go 1.20では、初めてPGOをプレビュー版としてサポートするバージョンです。完全なガイドを閲覧するためには[profile-guided optimization user guide](https://go.dev/doc/pgo)を参照してください。これらはまだ荒削りな部分が残っているので商用環境では使用しない方が良いでしょう。しかしあなたが試してみて、私たちに様々なフィードバックや[見つけたバグ](https://github.com/golang/go/issues/new/choose)を送ってくれることを心よりお待ちしております。
 
@@ -118,7 +116,7 @@ reliable, and efficient software.</p>
 
 `main.go`内で、CPUプロファイルを収集するため、サーバーに`/debug/pprof/profile`エンドポイントを自動的に追加する[`net/http/pprof`](https://pkg.go.dev/net/http/pprof)をインポートしました。
 
-コンパイラが本番環境での動作を得られるために、一般的には本番環境のプロファイルを集めたいと思うはずです。この例では本番環境を持っていないので、今回はプロファイルを取得する間に負荷をかけるシンプルな動作のプログラムを作りたいと思います。下記のプログラムを`load/main.go`にコピーし、負荷をかけてください(先程実行したサーバーがまだ実行中であることを確認してください)。
+コンパイラが本番環境での動作を得られるように、一般的には本番環境のプロファイルを集めたいと思うはずです。この例では本番環境を持っていないので、今回はプロファイルを取得する間に負荷をかけるシンプルな動作のプログラムを作りたいと思います。下記のリンクのGo Playgroundからプログラムを`load/main.go`にコピーし、負荷をかけてください(先程実行したサーバーがまだ実行中であることを確認してください)。
 
 https://go.dev/play/p/yYH0kfsZcpL
 
@@ -147,7 +145,9 @@ $ go build -pgo=auto -o markdown.withpgo.exe
 ```
 
 ### 評価
-さて、PGOにおけるパフォーマンスの効果がどの程度なのかを確認するために、負荷生成器のベンチマークバージョンを使用してみましょう。
+さて、PGOにおけるパフォーマンスの効果がどの程度なのかを確認するために、負荷生成器のベンチマークバージョンを使用してみましょう。下記のリンクのGo Playgroundからプログラムを`load/bench_test.go`にコピーしてください。
+
+https://go.dev/play/p/6FnQmHfRjbh
 
 まずは、PGOなしでサーバーを測定してみましょう。サーバーを起動します。
 ```
@@ -169,7 +169,7 @@ $ ./markdown.withpgo.exe
 $ go test example.com/markdown/load -bench=. -count=20 -source ../README.md > withpgo.txt
 ```
 
-ベンチマークが完了したら、早速結果を比較してみましょう、
+ベンチマークが完了したら、早速結果を比較してみましょう。
 ```
 $ go install golang.org/x/perf/cmd/benchstat@latest
 $ benchstat nopgo.txt withpgo.txt
@@ -188,7 +188,7 @@ PGO有りの場合、2.6%程度早くなっています！Go1.20では、PGOを�
 ## 次のステップ
 この例では、プロファイルを収集した後全く同じソースコードを用いて際ビルドしています。現実世界では開発は常に進んでいるため、先週のコードの本番環境からプロファイルを集め、それを本日のソースコードに使用してビルドするかもしれません。このようなケースでも、全く問題ありません！PGOは小さい変更点を問題なく扱うことができるのです。
 
-PGOのより詳細な情報やベストプラクティス、注意点などは(profile-guided optimization user guide)[https://go.dev/doc/pgo]をご覧ください。
+PGOのより詳細な情報やベストプラクティス、注意点などは[profile-guided optimization user guide](https://go.dev/doc/pgo)をご覧ください。
 
 フィードバックをお待ちしています！PGOはまだプレビュー版であり、使用しづらい点や正しく動作しない点等のご意見を聞けることを楽しみにしています。こちらのリンクから起票を行なってください。
 
