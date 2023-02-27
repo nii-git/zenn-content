@@ -6,6 +6,9 @@ topics: ["aws","aws認定試験","dva","dva-02"]
 published: false
 ---
 
+## 対象読者
+- AWS Certified Developer - Associateを受験予定だが、本だけではどのようなサービスかイメージしづらいと思っている方
+
 ## Outline
 AWS Certified Developer - Associate認定試験の対象のうち、デベロッパーツールを実際に設定する記事になります。 //todo
 参考書だけの暗記ではなく、実際に画面を見てイメージしやすくするための助けになれば幸いです。 //todo
@@ -210,7 +213,6 @@ $ chmod +x codebuild_build.sh
 ```
 $ ./codebuild_build.sh -i public.ecr.aws/codebuild/amazonlinux2-x86_64-standard:4.0 -a ./output -l public.ecr.aws/codebuild/local-builds:aarch64
 ```
-
 
 
 //todo このままだとpushして、毎度ビルドを手動で走らせなきゃ　面倒だよね　そんな時にCodePipeline
