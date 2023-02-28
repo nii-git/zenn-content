@@ -3,7 +3,7 @@ title: "新しいEC2インスタンスタイプm7g,r7gについて/AWS News Blog
 emoji: "🥸"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["翻訳","AWS","EC2"]
-published: true
+published: false
 ---
 
 # Outline
