@@ -1,9 +1,9 @@
 ---
-title: "新しいEC2インスタンスタイプm7g,r7gについて/AWS News Blog"
+title: "新しいEC2インスタンスタイプm7g、r7gについて/AWS News Blog"
 emoji: "🥸"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["翻訳","AWS","EC2"]
-published: false
+published: true
 ---
 
 # Outline
@@ -16,7 +16,7 @@ https://aws.amazon.com/jp/blogs/aws/new-graviton3-based-general-purpose-m7g-and-
 <!-- リンク追加,スライド翻訳版作成 -->
 2023年2月13日 Jeff Barr
 
-2006年にm1.smallインスタンスをローンチして以来、[インスタンス](https://aws.amazon.com/jp/blogs/aws/new-graviton3-based-general-purpose-m7g-and-memory-optimized-r7g-amazon-ec2-instances/#:~:text=in%202006%2C%20adding-,instances,-with%20additional%20memory)のメモリやCPU性能、CPUメーカーの選択肢を追加してきました。思えば長い道のりです。元々の汎用的なフリーサイズインスタンスは特定のケースに最適化された6つのタイプに進化し、全体で600以上のインスタンスが使用可能になりました。
+2006年にm1.smallインスタンスをローンチして以来、[インスタンス](https://aws.amazon.com/ec2/instance-types/)のメモリやCPU性能、CPUメーカーの選択肢を追加してきました。思えば長い道のりです。元々の汎用的なフリーサイズインスタンスは特定のケースに最適化された6つのタイプに進化し、全体で600以上のインスタンスが使用可能になりました。
 
 ::: message
 訳注: EC2インスタンスには下記の６タイプが存在しています。
@@ -30,7 +30,7 @@ https://aws.amazon.com/jp/ec2/instance-types/
 :::
 
 ## 新しいm7gとr7g
-本日、m7gとr7gという最新のAmazon EC2インスタンスタイプに関するお話をできることを嬉しく思います。両方とも最新のAWS [Gravition3](https://aws.amazon.com/jp/blogs/aws/new-graviton3-based-general-purpose-m7g-and-memory-optimized-r7g-amazon-ec2-instances/#:~:text=latest%20generation%20AWS-,Graviton3,-processors%2C%20and%20are)プロセッサーで動作し、第6世代(m6gとr6g)インスタンスに比べると25%ほどのパフォーマンス向上されており、EC2のさらなるパフォーマンスを引き出せるように設計されています。
+本日、m7gとr7gという最新のAmazon EC2インスタンスタイプに関するお話ができることを嬉しく思います。両方とも最新のAWS [Gravition3](https://aws.amazon.com/ec2/graviton/)プロセッサーで動作し、第6世代(m6gとr6g)インスタンスに比べると25%ほどのパフォーマンスの向上がされており、EC2のさらなるパフォーマンスを引き出せるように設計されています。
 
 m7gインスタンスは、アプリケーションサーバー、マイクロサービス、ゲームサーバー、中程度のデータサーバー、フリートのキャッシュ等の汎用的な使用に向いています。r7gインスタンスは、オープンソースのデータベースやインメモリ型のキャッシュ、リアルタイムでのビッグデータ分析等のメモリに負荷がかかるような作業にぴったりでしょう。
 
@@ -66,9 +66,8 @@ r7gインスタンスのスペック表はこちらです。
 どちらのインスタンスタイプも[DDR5](https://en.wikipedia.org/wiki/DDR5_SDRAM)メモリを用いており、前世代のDDR4よりもメモリ帯域幅が最大50%上昇しています。下記の画像は新しいインスタンスで利用可能な主なパフォーマンスや容量の向上をまとめたものです。
 
 ![パフォーマンス向上まとめ](/images/others/awsblog-ec2-instance-m7g-r7g2.png)
-画像引用元:https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2023/02/08/m7g_r7g_v3_v2.png
 
-もしまだアプリケーションをGravitonインスタンスで実行したことがない場合、ぜひ[AWS Graviton Ready Program](https://aws.amazon.com/jp/blogs/aws/new-graviton3-based-general-purpose-m7g-and-memory-optimized-r7g-amazon-ec2-instances/#:~:text=AWS%20Graviton%20Ready%20Program)をご利用ください。このプログラムのパートナーは、アプリケーションの移行だけでなく、Gravitonインスタンスが提供する全ての機能を最大限に活用できるように助けてくれるでしょう。他にも、[Porting Advisor for Graviton](https://aws.amazon.com/about-aws/whats-new/2023/01/porting-advisor-graviton/)や[raviton Fast Start program](https://aws.amazon.com/ec2/graviton/fast-start/)に有益な情報があるのでチェックしてください。
+もしまだアプリケーションをGravitonインスタンスで実行したことがない場合、ぜひ[AWS Graviton Ready Program](https://aws.amazon.com/ec2/graviton/partners/?partner-solutions-cards.sort-by=item.additionalFields.partnerNameLower&partner-solutions-cards.sort-order=asc&awsf.partner-solutions-filter-partner-type-storage=*all&awsf.partner-solutions-filter-partner-location-storage=*all)をご利用ください。このプログラムのパートナーは、アプリケーションの移行だけでなく、Gravitonインスタンスが提供する全ての機能を最大限に活用できるように助けてくれるでしょう。他にも、[Porting Advisor for Graviton](https://aws.amazon.com/about-aws/whats-new/2023/01/porting-advisor-graviton/)や[raviton Fast Start program](https://aws.amazon.com/ec2/graviton/fast-start/)に有益な情報があるのでチェックしてください。
 
 これらのインスタンスは[AWS Nitro System](https://aws.amazon.com/ec2/nitro/)でビルドされているので、様々なセキュリティの恩恵を受けることができます。例として、常時メモリ暗号化、vCPUに特化したキャッシュ、ポインター認証のサポート等が挙げられます。また、保存データやインスタンスとボリューム間のデータ移行、スナップショット作成やスナップショットからのボリューム作成時にデータを守ってくれる[EBSボリュームの暗号化](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html)もサポートしています。これらのNitroによるセキュリティ特徴の詳細は[The Security Design of the AWS Nitro System](https://docs.aws.amazon.com/whitepapers/latest/security-design-of-aws-nitro-system/security-design-of-aws-nitro-system.html)をお読みください。
 
