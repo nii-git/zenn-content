@@ -181,7 +181,9 @@ find out: 解く、見破る
 
 ### カバレッジデータを集めるために統合テストを使用する
 
+<!-- ここのbutは何を表すのか？ -->
 
+さて、前のスクリプトを呼び出してカバレッジのためのツールをビルドし、その結果のプロファイルを後処理する別のラッパースクリプトを実装していきましょう。
 
 > Let’s write another wrapper script that invokes the previous script, but builds the tool for coverage and then post-processes the resulting profiles:
 
@@ -196,12 +198,14 @@ PKGARGS="$*"
 rm -rf covdatafiles
 mkdir covdatafiles
 #
+# カバレッジのためのビルドをするスクリプトに"-cover"を渡し、GOCOVERDIRをセットして実行します
 # Pass in "-cover" to the script to build for coverage, then
 # run with GOCOVERDIR set.
 #
 GOCOVERDIR=covdatafiles \
   /bin/sh integration_test.sh -cover $PKGARGS
 #
+# 結果の後処理を行います
 # Post-process the resulting profiles.
 #
 go tool covdata percent -i=covdatafiles
@@ -210,12 +214,133 @@ $
 
 ::: message
 invoke: 呼び出す。callとの違いは[この記事](https://qiita.com/Ted-HM/items/7dde25dcffae4cdc7923#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88)がわかりやすい
+post-process: 後処理
 :::
 
 ---
->
+
+ラッパーに関して、いくつか重要な点があります。
+- `integration_test.sh`実行時に"-cover"を渡すことで、カバレッジを測定できる`mdtool.exe`バイナリを作成した
+- カバレッジデータが書かれるファイル名をGOCOVERDIR環境変数にセットした
+- テストが完了した時、プログラムの網羅度合いについてのレポートを生み出すために`go tool covdata percent`を実行した 　
+
+> Some key things to note about the wrapper above:
+
+> - it passes in the “-cover” flag when running integration_test.sh, which gives us a coverage-instrumented “mdtool.exe” binary
+> - it sets the GOCOVERDIR environment variable to a directory into which coverage data files will be written
+> - when the test is complete, it runs “go tool covdata percent” to produce a report on percentage of statements covered
+
+
+---
+
+新しいラッパースクリプトを実行した結果はこの通りです。
+
+> Here’s the output when we run this new wrapper script:
+
+```sh
+$ /bin/sh wrap_test_for_coverage.sh
+...
+    gitlab.com/golang-commonmark/mdtool coverage: 48.1% of statements
+# 注: covdatafiles内には381ファイルあります
+# Note: covdatafiles now contains 381 files.
+```
+---
+
+じゃじゃーん！これで`mdtool`アプリケーションのソースコードが動作する結合試験がどの程度うまく動作しているか知ることができました。
+
+もしテストハーネスの効率を高めるために変更するのであれば、2つ目のカバレッジコレクションを実行させることでカバレッジレポートに変化が反映されていることを確認することができるでしょう。例えば、`integration_test.sh`に2行追加するとします。
+
+> Voila! We now have some idea of how well our integration tests work in exercising the “mdtool” application’s source code.
+> If we make changes to enhance the test harness, then do a second coverage collection run, we’ll see the changes reflected in the coverage report. For example, suppose we improve our test by adding these two additional lines to integration_test.sh:
+
+```sh
+./mdtool.exe +ty testdata/README.md  > /dev/null
+./mdtool.exe +ta < testdata/README.md  > /dev/null
+```
+
+::: message
+Voila: 〈フランス語〉ほら、じゃじゃーん、（もう）出来上がり◆完成を披露するときなどに、相手の注意を引くために言う。本来aに重アクセント記号が付く。([英辞郎 on the Web](https://eow.alc.co.jp/search?q=voila#:~:text=%E3%80%88%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E8%AA%9E%E3%80%89%E3%81%BB%E3%82%89%E3%80%81%E3%81%98%E3%82%83%E3%81%98%E3%82%83%E3%83%BC,%E3%81%B0%E3%80%81%E3%81%BB%E3%82%89%E5%87%BA%E6%9D%A5%E4%B8%8A%E3%81%8C%E3%82%8A%E3%80%82)より引用)
+test harness: ソフトウェアテストで用いられるテスト実行用のソフトウェアのこと。([ITmedia エンタープライズ](https://www.itmedia.co.jp/im/articles/1111/07/news185.html)から引用)
+:::
+
+---
+
+再度カバレッジテストを実行します。
+
+網羅率が48%から54%に増えていて、変更の効果が現れていることがわかります。
+
+> Running the coverage testing wrapper again:
+> We can see the effects of our change: statement coverage has increased from 48% to 54%.
+
+```sh
+$ /bin/sh wrap_test_for_coverage.sh
+finished processing 380 files, no crashes
+    gitlab.com/golang-commonmark/mdtool coverage: 54.6% of statements
+$
+```
+
+### カバーするパッケージを選択する
+
+デフォルトでは、
+
+`go build -cover`はビルドするGoモジュールの一部のパッケージを測定します。今回だと `gitlab.com/golang-commonmark/mdtool`のみ測定されます。
+
+しかし、他のパッケージもカバレッジを測定できた方が便利な場合もあるでしょう。その場合、`go build -cover`に`-coverpkg`を渡してあげることで実現することができます。
+
+> By default, “go build -cover” will instrument just the packages that are part of the Go module being built, which in this case is the gitlab.com/golang-commonmark/mdtool package.
+> In some cases however it is useful to extend coverage instrumentation to other packages; this can be accomplished by passing “-coverpkg” to “go build -cover”.
+
+::: message
+accomplish: (動)成し遂げる、果たす
+:::
+
+
+---
+
+<!--ここも翻訳がイマイチ instrumentのいい訳し方教えてください-->
+
+今回使用したサンプルプログラムでは、`mdtool` は実は単に`gitlab.com/golang-commonmark/markdown`パッケージをラッパーしていただけにすぎません。なので、実装されているパッケージ群にマークダウンを含んでみるのも面白いかもしれません。
+
+下記は`mdtool`のための`go.mod`です。
+
+> For our example program, “mdtool” is in fact largely just a wrapper around the package gitlab.com/golang-commonmark/markdown, so it is interesting to include markdown in the set of packages that are instrumented.
+> Here’s the go.mod file for “mdtool”:
+
+```md
+$ head go.mod
+module gitlab.com/golang-commonmark/mdtool
+
+go 1.17
+
+require (
+    github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
+    gitlab.com/golang-commonmark/markdown v0.0.0-20211110145824-bf3e522c626a
+)
+```
+
+---
+
+//todo
+
+> We can use the “-coverpkg” flag to control which packages are selected for inclusion in the coverage analysis to include one of the deps above. Here’s an example:
+
+```sh
+$ /bin/sh wrap_test_for_coverage.sh -coverpkg=gitlab.com/golang-commonmark/markdown,gitlab.com/golang-commonmark/mdtool
+...
+    gitlab.com/golang-commonmark/markdown   coverage: 70.6% of statements
+    gitlab.com/golang-commonmark/mdtool coverage: 54.6% of statements
+$
+```
+
 
 ::: message
 
 :::
 
+---
+
+>
+
+::: message
+
+:::
