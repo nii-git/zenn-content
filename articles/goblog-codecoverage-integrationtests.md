@@ -320,7 +320,9 @@ require (
 
 ---
 
-//todo
+<!-- depは何を指す? -->
+
+`-coverpkg`フラグを使用して、上記のdepsの1つを含めるためにカバレッジ分析に含めるパッケージを選択することを制御できます。 以下に例を示します。
 
 > We can use the “-coverpkg” flag to control which packages are selected for inclusion in the coverage analysis to include one of the deps above. Here’s an example:
 
@@ -332,6 +334,57 @@ $ /bin/sh wrap_test_for_coverage.sh -coverpkg=gitlab.com/golang-commonmark/markd
 $
 ```
 
+::: message
+inclusion: (名)包含
+:::
+
+## カバレッジデータファイルの操作
+
+統合テストのカバレッジが完了し、生データ(このケースであれば`covdatafiles`ディレクトリに入っているもの)が取得できたのであれば、後処理をさまざまな方法で実施できます。
+
+> When a coverage integration test has completed and written out a set of raw data files (in our case, the contents of the covdatafiles directory), we can post-process these files in various ways.
+
+### プロファイルを`coverprofile`テキストフォーマットに変換
+
+ユニットテストを実行する際、与えられたカバレッジテストの実行のカバレッジプロファイルをテキスト形式で書き込むために、`go test -coverprofile=abc.txt`で実行します。
+
+バイナリを`go build -cover`でビルドしたバイナリでは、GOCOVERDIRディレクトリに生成されたファイルを用いて`go tool covdata textfmt`実行することで、後からテキスト形式のプロファイルを生成できます。
+
+このステップが完了すると、`go tool cover -func=<file>`や`go tool cover -html=<file>`を用いて、`go test -coverprofile`を使うのと同様に視覚的にデータを解釈することができます。
+
+下記はその例です。
+
+> When working with unit tests, you can run go test -coverprofile=abc.txt to write a text-format coverage profile for a given coverage test run.
+> With binaries built with go build -cover, you can generate a text-format profile after the fact by running go tool covdata textfmt on the files emitted into the GOCOVERDIR directory.
+> Once this step is complete, you can use go tool cover -func=<file> or go tool cover -html=<file> to interpret/visualize the data just as you would with go test -coverprofile.
+> Example:
+
+```sh
+$ /bin/sh wrap_test_for_coverage.sh
+...
+$ go tool covdata textfmt -i=covdatafiles -o=cov.txt
+$ go tool cover -func=cov.txt
+gitlab.com/golang-commonmark/mdtool/main.go:40:     readFromStdin   100.0%
+gitlab.com/golang-commonmark/mdtool/main.go:44:     readFromFile    80.0%
+gitlab.com/golang-commonmark/mdtool/main.go:54:     readFromWeb 0.0%
+gitlab.com/golang-commonmark/mdtool/main.go:64:     readInput   80.0%
+gitlab.com/golang-commonmark/mdtool/main.go:74:     extractText 100.0%
+gitlab.com/golang-commonmark/mdtool/main.go:88:     writePreamble   100.0%
+gitlab.com/golang-commonmark/mdtool/main.go:111:    writePostamble  100.0%
+gitlab.com/golang-commonmark/mdtool/main.go:118:    handler     0.0%
+gitlab.com/golang-commonmark/mdtool/main.go:139:    main        51.6%
+total:                          (statements)    54.6%
+$
+```
+
+::: message
+emit: (動)発行する、吐く、発射する
+interpret: (動)解釈する
+:::
+
+---
+
+>
 
 ::: message
 
@@ -344,3 +397,35 @@ $
 ::: message
 
 :::
+
+---
+
+>
+
+::: message
+
+:::
+
+---
+
+>
+
+::: message
+
+:::
+
+---
+>
+
+::: message
+
+:::
+
+---
+>
+
+::: message
+
+:::
+
+---
