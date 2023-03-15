@@ -2,8 +2,8 @@
 title: "Go統合テストにおけるコードカバレッジを翻訳する"
 emoji: "😃"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["test"]
-published: false
+topics: ["go","翻訳","コードカバレッジ","テスト"]
+published: true
 ---
 
 
@@ -18,7 +18,7 @@ https://go.dev/blog/integration-test-coverage
 Than McIntosh
 2023年3月8日
 
-コードカバレッジツールは、テストスイートが実行された際にソースコードの割合がどれだけカバーされ、実行されているか、開発者の判断の支えになります。
+コードカバレッジツールは、テストスイートが実行された際にソースコードの割合がどれだけカバーされ、実行されているか開発者の判断の支えになります。
 
 Go言語では、[Go1.2リリースの際にパッケージレベルのコードカバレッジ測定機能を導入を初め](https://go.dev/blog/cover)、何度かのアップデートを行なっています。これらは`go test`コマンドを実行する際、`-cover`フラグをつけることで実行できます。
 
@@ -27,7 +27,7 @@ Go言語では、[Go1.2リリースの際にパッケージレベルのコード
 > Go has for some time provided support (introduced in the Go 1.2 release) to measure code coverage at the package level, using the "-cover" flag of the “go test” command.
 
 ::: message
-fraction of ~: ~の割合
+fraction of: ~の割合
 test suite: テストスイートはテストの目的や条件が似ている複数のテストケースを一括りにしたもの( [Qmedia!](https://q-media.jp/test-suite)より引用)
 :::
 
@@ -45,7 +45,7 @@ integration test: 総合テスト、統合テスト
 
 ---
 
-このようなテストは、一般的にはアプリケーション全体のバイナリを必要とします。独立したパッケージを単独にテストするのとは反対に、構成する全てのパッケージが正しく動作しているかを保証するために全体のバイナリを代表的な一入力値（サーバーなら負荷テスト等）を用いて実行します。
+このようなテストは、一般的にはアプリケーション全体のバイナリを必要とします。独立したパッケージを単独にテストするのとは反対に、構成する全てのパッケージが正しく動作しているかを保証するために全体のバイナリを代表的な入力値（サーバーなら負荷テスト等）を用いて実行します。
 
 > This type of test typically involves building a complete application binary, then running the binary on a set of representative inputs (or under production load, if it is a server) to ensure that all of the component packages are working correctly together, as opposed to testing individual packages in isolation.
 
@@ -225,7 +225,6 @@ post-process: 後処理
 - テストが完了した時、プログラムの網羅度合いについてのレポートを生み出すために`go tool covdata percent`を実行した 　
 
 > Some key things to note about the wrapper above:
-
 > - it passes in the “-cover” flag when running integration_test.sh, which gives us a coverage-instrumented “mdtool.exe” binary
 > - it sets the GOCOVERDIR environment variable to a directory into which coverage data files will be written
 > - when the test is complete, it runs “go tool covdata percent” to produce a report on percentage of statements covered
@@ -281,9 +280,7 @@ $
 
 ### カバーするパッケージを選択する
 
-デフォルトでは、
-
-`go build -cover`はビルドするGoモジュールの一部のパッケージを測定します。今回だと `gitlab.com/golang-commonmark/mdtool`のみ測定されます。
+デフォルトでは、`go build -cover`はビルドするGoモジュールの一部のパッケージを測定します。今回だと `gitlab.com/golang-commonmark/mdtool`のみ測定されます。
 
 しかし、他のパッケージもカバレッジを測定できた方が便利な場合もあるでしょう。その場合、`go build -cover`に`-coverpkg`を渡してあげることで実現することができます。
 
@@ -416,7 +413,7 @@ $
 
 ::: message
 wind up: ...で終わる
-O(N): オーダー記法。今回はファイル数の入力ぶんに比例して出力ファイルが増える
+O(N): オーダー記法。今回はファイル数の入力数に比例して出力ファイル数が増えるというニュアンス
 :::
 
 ---
