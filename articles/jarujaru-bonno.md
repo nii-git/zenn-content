@@ -26,7 +26,7 @@ https://www.youtube.com/playlist?app=desktop&list=PLRdiaanKAFQl5ERDgJHx2ZRKCcIl-
 ---
 
 この煩悩プレーリストを周回している時にふと思いました。
-どのコントが人気あるのだろうか、と。
+どのコントが人気あるのでしょうか？
 
 というわけで、解析するためにツールを作成しました。
 再生リスト内の動画の再生回数や高評価、コメント数を取得するツールです。
@@ -83,8 +83,55 @@ https://github.com/nii-git/youtube-app
 
 # 技術
 Go + YoutubeAPI で作成しているシンプルなプログラムです。
+//なんか一言
 
-//図解
+## フローチャート図
+
+![処理フロー図](/images/others/youtube-playlist-analyze.drawio.png)
+
+## 動画リスト情報取得
+まずはプレーリストIDを基に、リストに含まれる動画情報を抽出していきます。
+[Playlists: list API](https://developers.google.com/youtube/v3/docs/playlists/list?hl=ja)を使用します。
+
+必須パラメータ`part`にはsnippetを指定します。
+これにより、item.snippet.recourceId.videoId(動画ID)が返されます。
+
+```JSON
+{
+    "kind": "youtube#playlistItem",
+    "etag": "ZGt5Se0wR8z49JKiKPJo60yGFcg",
+    "id": "UExSZGlhYW5LQUZRbDVFUkRnSkh4MlpSS0NjSWwtSThmei41NkI0NEY2RDEwNTU3Q0M2",
+    "snippet":{
+    "publishedAt": "2020-03-28T03:27:55Z",
+    "channelId": "UChwgNUWPM-ksOP3BbfQHS5Q",
+    "title": "煩悩ネタ！『一服する奴』",
+    "description": "省略",
+    "thumbnails":{"default":{"url": "https://i.ytimg.com/vi/1TzGN4VSGR0/default.jpg", "width": 120,...},
+    "channelTitle": "ジャルジャルタワー JARUJARU TOWER",
+    "playlistId": "PLRdiaanKAFQl5ERDgJHx2ZRKCcIl-I8fz",
+    "position": 0,
+    "resourceId":{"kind": "youtube#video", "videoId": "1TzGN4VSGR0"},
+    "videoOwnerChannelTitle": "ジャルジャルタワー JARUJARU TOWER",
+    "videoOwnerChannelId": "UChwgNUWPM-ksOP3BbfQHS5Q"
+}
+
+```
+
+1回のリクエストにつき最大50件までしか動画情報を取得できないため、51件以上の動画を含む動画リストを指定する場合は複数回Playlists list APIを呼ぶ必要があります。この時、レスポンス`nextPageToken`を使用することでページネーションと最終ページ処理を合わせて行うことができます。
+
+## 動画情報取得
+上記で取得した動画IDを基に、高評価数や視聴回数を取得していきます。
+[Videos: list API](https://developers.google.com/youtube/v3/docs/videos/list?hl=ja)を使用します。
+
+必須パラメータ`part`にはstatisticsを指定します。
+これにより、items.statistics(高評価数、視聴回数、お気に入り回数、コメント数)が返されます。
+
+```JSON
+
+```
+
+
+
 
 ## ツール、使用方法
 
