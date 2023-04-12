@@ -18,7 +18,7 @@ https://go.dev/blog/integration-test-coverage
 Than McIntosh
 2023年3月8日
 
-コードカバレッジツールは、テストスイートが実行された際にソースコードの割合がどれだけカバーされ、実行されているか開発者の判断の支えになります。
+コードカバレッジツールは、特定のテストスイートが実行された際にソースコードのどの部分がカバーされているか（実行されているか）を開発者が判断するのに役立ちます。
 
 Go言語では、[Go1.2リリースの際にパッケージレベルのコードカバレッジ測定機能を導入を初め](https://go.dev/blog/cover)、何度かのアップデートを行なっています。これらは`go test`コマンドを実行する際、`-cover`フラグをつけることで実行できます。
 
@@ -33,7 +33,7 @@ test suite: テストスイートはテストの目的や条件が似ている�
 
 ---
 
-これらのツールはほとんどのケースで上手く動作するのですが、大きなGoアプリのカバレッジを測定するのは苦手です。このようなアプリケーションでは、技術者はパッケージレベルの結合テストに加え、統合テストを記載することで全体のプログラムの振る舞いを検証していたことでしょう。
+これらのツールはほとんどのケースでうまく動作しますが、大規模なGoアプリケーションにはいくつかの弱点があります。このようなアプリケーションでは、技術者はパッケージレベルの結合テストに加え、統合テストを記載することで全体のプログラムの振る舞いを検証していたことでしょう。
 
 > This tooling works well in most cases, but has some weaknesses for larger Go applications. For such applications, developers often write “integration” tests that verify the behavior of an entire program (in addition to package-level unit tests).
 
@@ -45,7 +45,7 @@ integration test: 総合テスト、統合テスト
 
 ---
 
-このようなテストは、一般的にはアプリケーション全体のバイナリを必要とします。独立したパッケージを単独にテストするのとは反対に、構成する全てのパッケージが正しく動作しているかを保証するために全体のバイナリを代表的な入力値（サーバーなら負荷テスト等）を用いて実行します。
+このタイプのテストでは、通常、アプリケーション全体のバイナリをビルドし、代表的な入力データセット（またはサーバーであれば本番負荷の下で）を使ってバイナリを実行します。これは、個々のパッケージを単独でテストするのではなく、構成要素であるすべてのパッケージが正しく連携して動作していることを確認するためです。
 
 > This type of test typically involves building a complete application binary, then running the binary on a set of representative inputs (or under production load, if it is a server) to ensure that all of the component packages are working correctly together, as opposed to testing individual packages in isolation.
 
@@ -67,7 +67,7 @@ up until now: 今までは
 
 ---
 
-Go 1.20では、`go build -cover`を用いることでカバレッジ測定プログラムを使用が可能になりました。プログラム全体のバイナリを統合テストに渡すことによって、カバレッジテストの範囲が広がります。
+Go 1.20では、`go build -cover`を使用することでカバレッジ測定プログラムをビルドすることが可能になりましたこれらの計測機能を備えたバイナリを統合テストに渡すことで、カバレッジテストの範囲が広がります。
 
 この記事では新機能がどのようにして動作するかの例と、統合テストからカバレッジプロファイルを収集する方法の概要を説明していきます。
 
@@ -89,7 +89,7 @@ https://pkg.go.dev/gitlab.com/golang-commonmark/mdtool
 
 ### mdtoolのセットアップ
 
-まず、`metool`のコピーをダウンロードしてみましょう（再現性を高めるために特定のバージョンを使用しています）。
+まず、`mdtool`のコピーをダウンロードしてみましょう（再現性を高めるために特定のバージョンを使用しています）。
 
 > First let’s download a copy of “mdtool” itself (we’re picking a specific version just to make these steps reproducible):
 
@@ -294,7 +294,7 @@ accomplish: (動)成し遂げる、果たす
 
 ---
 
-<!--ここも翻訳がイマイチ instrumentのいい訳し方教えてください-->
+<!--ここも翻訳がイマイチ instrumentedのいい訳し方教えてください-->
 
 今回使用したサンプルプログラムでは、`mdtool` は実は単に`gitlab.com/golang-commonmark/markdown`パッケージをラッパーしていただけにすぎません。なので、実装されているパッケージ群にマークダウンを含んでみるのも面白いかもしれません。
 
@@ -317,9 +317,7 @@ require (
 
 ---
 
-<!-- depは何を指す? -->
-
-`-coverpkg`フラグを使用して、上記のdepsの1つを含めるためにカバレッジ分析に含めるパッケージを選択することを制御できます。 以下に例を示します。
+`-coverpkg`フラグを使用して、上記の依存関係の1つを含めるためにカバレッジ分析に含めるパッケージを選択することを制御できます。 以下に例を示します。
 
 > We can use the “-coverpkg” flag to control which packages are selected for inclusion in the coverage analysis to include one of the deps above. Here’s an example:
 
@@ -333,6 +331,7 @@ $
 
 ::: message
 inclusion: (名)包含
+deps: 依存関係 (dependencies)のこと
 :::
 
 ## カバレッジデータファイルの操作
@@ -345,7 +344,7 @@ inclusion: (名)包含
 
 ユニットテストを実行する際、与えられたカバレッジテストの実行のカバレッジプロファイルをテキスト形式で書き込むために、`go test -coverprofile=abc.txt`で実行します。
 
-バイナリを`go build -cover`でビルドしたバイナリでは、GOCOVERDIRディレクトリに生成されたファイルを用いて`go tool covdata textfmt`実行することで、後からテキスト形式のプロファイルを生成できます。
+`go build -cover`でビルドしたバイナリでは、GOCOVERDIRディレクトリに生成されたファイルを用いて`go tool covdata textfmt`実行することで、後からテキスト形式のプロファイルを生成できます。
 
 このステップが完了すると、`go tool cover -func=<file>`や`go tool cover -html=<file>`を用いて、`go test -coverprofile`を使うのと同様に視覚的にデータを解釈することができます。
 
