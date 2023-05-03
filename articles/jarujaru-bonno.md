@@ -75,12 +75,6 @@ https://github.com/nii-git/youtube-app
 |  <a href="https://www.youtube.com/watch?v=dKB8Z_KJG3I">煩悩ネタ！『嘘つき通す奴』</a>  |  605  |
 
 
-# ツールの使用方法
-
-下記リポジトリをクローンし、READMEを参照してください。
-https://github.com/nii-git/youtube-app
-
-
 
 # 技術
 Go + YoutubeAPI で作成しているシンプルなプログラムです。
