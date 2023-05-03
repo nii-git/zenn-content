@@ -3,7 +3,7 @@ title: "YoutubeAPIを使用してジャルジャルの人気ネタを解析す�
 emoji: "😎"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["ジャルジャル","GCP","Youtube","YoutubeAPI","Go"]
-published: true
+published: false
 ---
 
 皆様、[ジャルジャル](https://profile.yoshimoto.co.jp/talent/detail?id=179)というコンビ芸人はご存知でしょうか？
