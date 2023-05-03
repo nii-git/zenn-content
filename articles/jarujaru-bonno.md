@@ -426,7 +426,7 @@ VideosListAPIのレスポンスからvidwCount, likeCount, commentCountを取得
 favoriteCountに関しては常に0を返すようです。公式ソースを見つけることができませんでしたが、favorite機能はリスト機能に置き換わった可能性が高いです。
 
 一応ChatGPT-4に聞いてみました。
-```
+`
 User:
 YoutubeAPI v3のvideo list api(https://www.googleapis.com/youtube/v3/videos)に関して、レスポンス内にあるfavoriteCountが常に0となるのはなぜですか？
 
@@ -434,7 +434,7 @@ ChatGPT:
 YouTube API v3のvideo list API (https://www.googleapis.com/youtube/v3/videos) に関して、レスポンス内にあるfavoriteCountが常に0となる理由は、YouTubeがお気に入り機能を廃止し、代わりに「いいね」や「プレイリストに追加」といった機能に置き換えたためです。
 かつては、ユーザーは動画をお気に入りに追加することができましたが、現在はその機能が利用できなくなっています。そのため、APIのレスポンスでfavoriteCountが常に0を返すようになっています。
 代わりに、動画に関する他の詳細情報を取得したい場合は、APIレスポンス内の「likeCount」、「dislikeCount」、「viewCount」、「commentCount」などの項目を使用してください。これらは、引き続き有効なデータを提供しています。
-```
+`
 
 
 # おわりに
