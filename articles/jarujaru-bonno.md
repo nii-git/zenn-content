@@ -3,7 +3,7 @@ title: "YoutubeAPIを使用してジャルジャルの人気ネタを解析す�
 emoji: "😎"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["ジャルジャル","GCP","Youtube","YoutubeAPI","Go"]
-published: false
+published: true
 ---
 
 皆様、[ジャルジャル](https://profile.yoshimoto.co.jp/talent/detail?id=179)というコンビ芸人はご存知でしょうか？
@@ -47,31 +47,31 @@ https://github.com/nii-git/youtube-app
 
 |  URL  |  タイトル  |  再生回数  |
 | ---- | ---- | ---- |
-| https://www.youtube.com/watch?v=dKB8Z_KJG3I |  <a href="">煩悩ネタ！『嘘つき通す奴』</a>  |  1398004  |
-|  <a href="https://www.youtube.com/watch?v=f_r4F6QTZx4">煩悩ネタ！『第一声、間違えて、友達失う奴』</a>  |  973753  |
-|  <a href="https://www.youtube.com/watch?v=hFnhrRqDrA0">煩悩ネタ！『オキンタマデカ男って奴』</a>  |  969133  |
-|  <a href="https://www.youtube.com/watch?v=TJDTMyVX4fw">煩悩ネタ！『あだ名コロコロ変わる奴』</a>  |  510030  |
-|  <a href="https://www.youtube.com/watch?v=wg-hRa2CFEs">煩悩ネタ！『大学の入学を辞めただけの奴』</a>  |  460008  |
+| https://www.youtube.com/watch?v=dKB8Z_KJG3I | 煩悩ネタ！『嘘つき通す奴』  |  1398004  |
+| https://www.youtube.com/watch?v=f_r4F6QTZx4 | 煩悩ネタ！『第一声、間違えて、友達失う奴』 |  973753  |
+| https://www.youtube.com/watch?v=hFnhrRqDrA0 | 煩悩ネタ！『オキンタマデカ男って奴』  |  969133  |
+| https://www.youtube.com/watch?v=TJDTMyVX4fw | 煩悩ネタ！『あだ名コロコロ変わる奴』  |  510030  |
+| https://www.youtube.com/watch?v=wg-hRa2CFEs | 煩悩ネタ！『大学の入学を辞めただけの奴』 |  460008  |
 
 
 ## 高評価数Top5
 
-|  タイトル  |  高評価数  |
-| ---- | ---- |
-|  <a href="https://www.youtube.com/watch?v=hFnhrRqDrA0">煩悩ネタ！『オキンタマデカ男って奴』</a>  |  16882  |
-|  <a href="https://www.youtube.com/watch?v=dKB8Z_KJG3I">煩悩ネタ！『嘘つき通す奴』</a>  |  14939  |
-|  <a href="https://www.youtube.com/watch?v=f_r4F6QTZx4">煩悩ネタ！『第一声、間違えて、友達失う奴』</a>  |  12595  |
-|  <a href="https://www.youtube.com/watch?v=Au-mjjkqe7g">煩悩ネタ！『声の周波数のせいで離れたら英語に聞こえる奴』</a>  |  7613  |
-|  <a href="https://www.youtube.com/watch?v=TJDTMyVX4fw">煩悩ネタ！『あだ名コロコロ変わる奴』</a>  |  6528  |
+|  URL  |  タイトル  |  再生回数  |
+| ---- | ---- | ---- |
+| https://www.youtube.com/watch?v=hFnhrRqDrA0 | 煩悩ネタ！『オキンタマデカ男って奴』  |  16882  |
+| https://www.youtube.com/watch?v=dKB8Z_KJG3I | 煩悩ネタ！『嘘つき通す奴』  |  14939  |
+| https://www.youtube.com/watch?v=f_r4F6QTZx4 | 煩悩ネタ！『第一声、間違えて、友達失う奴』  |  12595  |
+| https://www.youtube.com/watch?v=Au-mjjkqe7g | 煩悩ネタ！『声の周波数のせいで離れたら英語に聞こえる奴』  |  7613  |
+| https://www.youtube.com/watch?v=TJDTMyVX4fw | 煩悩ネタ！『あだ名コロコロ変わる奴』  |  6528  |
 
 ## コメント数Top5
-|  タイトル  |  コメント数  |
-| ---- | ---- |
-|  <a href="https://www.youtube.com/watch?v=xZDBDH8eseY">煩悩ネタ！『107本を通して感じたことをコントにする奴』</a>  |  862  |
-|  <a href="https://www.youtube.com/watch?v=wg-hRa2CFEs">煩悩ネタ！『大学の入学を辞めただけの奴』</a>  |  763  |
-|  <a href="https://www.youtube.com/watch?v=f_r4F6QTZx4">煩悩ネタ！『第一声、間違えて、友達失う奴』</a>  |  746  |
-|  <a href="https://www.youtube.com/watch?v=hFnhrRqDrA0">煩悩ネタ！『オキンタマデカ男って奴』</a>  |  720  |
-|  <a href="https://www.youtube.com/watch?v=dKB8Z_KJG3I">煩悩ネタ！『嘘つき通す奴』</a>  |  605  |
+|  URL  |  タイトル  |  再生回数  |
+| ---- | ---- | ---- |
+|  https://www.youtube.com/watch?v=xZDBDH8eseY煩悩ネタ！ | 『107本を通して感じたことをコントにする奴』  |  862  |
+|  https://www.youtube.com/watch?v=wg-hRa2CFEs煩悩ネタ！ | 『大学の入学を辞めただけの奴』  |  763  |
+|  https://www.youtube.com/watch?v=f_r4F6QTZx4煩悩ネタ！ | 『第一声、間違えて、友達失う奴』  |  746  |
+|  https://www.youtube.com/watch?v=hFnhrRqDrA0煩悩ネタ！ | 『オキンタマデカ男って奴』  |  720  |
+|  https://www.youtube.com/watch?v=dKB8Z_KJG3I煩悩ネタ！ | 『嘘つき通す奴』  |  605  |
 
 
 
