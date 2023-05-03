@@ -3,7 +3,7 @@ title: "YoutubeAPIを使用してジャルジャルの人気ネタを解析す�
 emoji: "😎"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["ジャルジャル","GCP","Youtube","YoutubeAPI","Go"]
-published: false
+published: true
 ---
 
 皆様、[ジャルジャル](https://profile.yoshimoto.co.jp/talent/detail?id=179)というコンビ芸人はご存知でしょうか？
@@ -13,12 +13,12 @@ published: false
 独特なキャラクターと無限のネタで笑わせてくれるお二人のネタが大好きで、よく開発の作業用BGMとして利用しています。
 
 そんな中でも私のお気に入りなのが、2019年の大晦日に開催した「大晦日に108回もジャルってんじゃねえよ」というライブです。
-除夜の鐘が`108回`鳴ることにかけて、披露するネタの数が**108回**、開演時間も**10時間8分**と正気の沙汰でないライブとなっています（料金も10800円というこだわりっぷりです）。
+除夜の鐘が**108回**鳴ることにかけて、披露するネタの数が**108回**、開演時間も**10時間8分**と正気の沙汰でないライブとなっています（料金も10800円というこだわりっぷりです）。
 
 2023年5月現在、この108本のコントがYoutube上で無料で見ることができます。
 なんていい時代なのでしょうか。ジャルジャルさんには頭が上がりませんね。
 
-(この109件の動画を一気にアップしたせいでチャンネル登録欄がジャルジャルで埋め尽くされ、登録者が1.8万人減ったニュースを見た時は爆笑しました)
+(この108件の動画を一気にアップしたせいでチャンネル登録欄がジャルジャルで埋め尽くされ、登録者が1.8万人減ったニュースを見た時は爆笑しました)
 
 https://www.youtube.com/playlist?app=desktop&list=PLRdiaanKAFQl5ERDgJHx2ZRKCcIl-I8fz
 
@@ -31,10 +31,9 @@ https://www.youtube.com/playlist?app=desktop&list=PLRdiaanKAFQl5ERDgJHx2ZRKCcIl-
 というわけで、解析するためにツールを作成しました。
 再生リスト内の動画の再生回数や高評価、コメント数を取得するツールです。
 
-Youtube Playlist Analyze
 https://github.com/nii-git/youtube-app
 
-使用技術や使い方に関してはランキングの下に記載しています。
+使用技術に関してはランキングの下に記載しています。
 
 # ランキング
 [ジャルジャルタワー JARUJARU TOWER](https://www.youtube.com/@jarujarutower365)チャンネルにアップされている[１０８本！煩悩ネタ！](https://www.youtube.com/playlist?app=desktop&list=PLRdiaanKAFQl5ERDgJHx2ZRKCcIl-I8fz)再生リストの中から、下記の項目で5位までを記載します。
@@ -46,9 +45,9 @@ https://github.com/nii-git/youtube-app
 
 ## 再生回数Top5
 
-|  タイトル  |  再生回数  |
-| ---- | ---- |
-|  <a href="https://www.youtube.com/watch?v=dKB8Z_KJG3I">煩悩ネタ！『嘘つき通す奴』</a>  |  1398004  |
+|  URL  |  タイトル  |  再生回数  |
+| ---- | ---- | ---- |
+| https://www.youtube.com/watch?v=dKB8Z_KJG3I |  <a href="">煩悩ネタ！『嘘つき通す奴』</a>  |  1398004  |
 |  <a href="https://www.youtube.com/watch?v=f_r4F6QTZx4">煩悩ネタ！『第一声、間違えて、友達失う奴』</a>  |  973753  |
 |  <a href="https://www.youtube.com/watch?v=hFnhrRqDrA0">煩悩ネタ！『オキンタマデカ男って奴』</a>  |  969133  |
 |  <a href="https://www.youtube.com/watch?v=TJDTMyVX4fw">煩悩ネタ！『あだ名コロコロ変わる奴』</a>  |  510030  |
