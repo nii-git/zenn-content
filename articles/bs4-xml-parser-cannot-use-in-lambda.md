@@ -7,15 +7,15 @@ published: false
 ---
 
 # 事象
-Lambdaにて、BeautifulSoupを用いてxmlをパースしようとしたところ、エラーが発生した
+Lambda上でBeautifulSoupを用いてxmlをパースしようとしたところ、エラーが発生した
 
 ```python
-    soup = BeautifulSoup(input_text,"xml")
+soup = BeautifulSoup(input_text,"xml")
 ```
 
-```
+```text:ダウンロード
 "errorMessage": "Couldn't find a tree builder with the features you requested: xml. Do you need to install a parser library?",
-  "errorType": "FeatureNotFound",
+"errorType": "FeatureNotFound",
 ```
 
 アップロードは下記を参考にzip形式で行った。
@@ -33,8 +33,7 @@ $ pip3 install --target ./package lxml
 
 # 解決法
 
-xmltodictライブラリを使いましょう。
-xmlを辞書型に変換してくれるツールです。
+xmlを辞書型に変換してくれる、`xmltodict`ライブラリを使った。
 
 https://pypi.org/project/xmltodict/
 
@@ -63,7 +62,6 @@ $ auto_webscraping % zip my_deployment_package.zip lambda_function.py
 
     # この行でエラーが発生
     soup = BeautifulSoup(req.text,"xml")
-
     links = soup.select(selectRule)
 
     for l in links:
