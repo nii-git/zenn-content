@@ -3,7 +3,7 @@ title: "BeautifuleSoupのxmlパーサーがLambdaで使えない"
 emoji: "🤨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","Lambda","Python3","BeautifulSoup","xml"]
-published: false
+published: true
 ---
 
 # 事象
@@ -13,7 +13,7 @@ Lambda上でBeautifulSoupを用いてxmlをパースしようとしたところ�
 soup = BeautifulSoup(input_text,"xml")
 ```
 
-```text:ダウンロード
+```text:実行結果
 "errorMessage": "Couldn't find a tree builder with the features you requested: xml. Do you need to install a parser library?",
 "errorType": "FeatureNotFound",
 ```
@@ -41,7 +41,6 @@ https://pypi.org/project/xmltodict/
 ```sh
 $ pip3 install --target ./package xtodict
 Collecting xmltodict
-  # ローカルのpipでもインストールしたためcacheになっています
   Using cached xmltodict-0.13.0-py2.py3-none-any.whl (10.0 kB)
 Installing collected packages: xmltodict
 Successfully installed xmltodict-0.13.0
@@ -53,7 +52,7 @@ $ auto_webscraping % zip my_deployment_package.zip lambda_function.py
 
 ## サンプルコード
 
-下記はBBCニュースRSS.xmlから、記事一覧のurlを取得するコードの例です。
+下記はBBCニュースRSS.xmlから記事一覧のurlを取得するコードの例
 
 ### 旧コード
 ```python
