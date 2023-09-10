@@ -69,7 +69,7 @@ https://docs.python.org/ja/3/library/stdtypes.html#str.isupper
 ### 配列の文字列を全て大文字にしたい場合
 リストの内包表記と、上記のupper()を使用します。
 
-```python3
+```python
 words = ["apple","banana","orange"]
 upper_words = [w.upper() for w in words]
 print(upper_words) # ['APPLE', 'BANANA', 'ORANGE']
@@ -78,7 +78,7 @@ print(upper_words) # ['APPLE', 'BANANA', 'ORANGE']
 ### 配列の文字列を全て小文字にしたい場合
 リストの内包表記と、上記のlower()を使用します。
 
-```python3
+```python
 words = ['APPLE', 'BANANA', 'ORANGE']
 lower_words = [w.lower() for w in words]
 print(lower_words) # ['apple', 'banana', 'orange']
@@ -87,7 +87,7 @@ print(lower_words) # ['apple', 'banana', 'orange']
 
 ## 特定の文字群を全て小文字にしたい時の速度比較
 
-英文は基本的に文の先頭の単語1文字目を大文字とするが、全て小文字に変換したい場合があります。
+英文は基本的に文の先頭の単語1文字目を大文字としますが、全て小文字に変換したい場合があります。
 この際2通りのアプローチが考えられますが、どちらの方が効率的なのでしょうか。実際に試してみます。
 
 `
@@ -98,7 +98,7 @@ print(lower_words) # ['apple', 'banana', 'orange']
 ### 前提条件
 テストで使用するデータは[BBC](https://www.bbc.com/)から約750記事を抽出し、単語毎に分割したものを使用します。
 
-```python3
+```python
 wordList = ['I', 'did', 'it', 'adding', '"I', 'got', 'my', "mom's", 'gun', 'last', 'night"', '', 'shortly', 'after', 'the', 'shooting', '', 'The', 'boy', 'has', 'not', 'been', 'charged', 'Taylor', 'had', 'pleaded', 'guilty', 'in', 'June', 'to', 'a', 'federal', 'charge', 'of', 'using', 'marijuana', 'while', 'possessing', 'a', 'firearm', '', 'The', 'sentencing', 'in', 'that', 'case', 'is', 'also', '', 'scheduled', 'for', 'October', 'Sign', 'up', 'for', 'our', 'morning', 'newsletter', 'and', 'get', 'BBC', 'News', 'in', 'your', 'inbox', '', ...]  # 中略
 
 print(len(wordList)) # 564023
@@ -106,7 +106,7 @@ print(len(wordList)) # 564023
 
 ### テスト1: ニュース記事に対して実行
 
-```python3
+```python
     # 全体に対して小文字化
     all_lower_start = time.time()
     all_lower_list = [w.lower() for w in wordList]
