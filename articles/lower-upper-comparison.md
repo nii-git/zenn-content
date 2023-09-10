@@ -107,26 +107,24 @@ print(len(wordList)) # 564023
 ### テスト1: ニュース記事に対して実行
 
 ```python
-    # 全体に対して小文字化
-    all_lower_start = time.time()
-    all_lower_list = [w.lower() for w in wordList]
-    all_lower_end = time.time()
+# 全体に対して小文字化
+all_lower_start = time.time()
+all_lower_list = [w.lower() for w in wordList]
+all_lower_end = time.time()
 
-    # print(all_lower_list)
+# print(all_lower_list)
 
-    # チェックして小文字化
-    check_islower_start = time.time()
-    check_islower_list = [w if w.islower() else w.lower() for w in wordList]
-    check_islower_end = time.time()
+# チェックして小文字化
+check_islower_start = time.time()
+check_islower_list = [w if w.islower() else w.lower() for w in wordList]
+check_islower_end = time.time()
 
-    # print(check_islower_list)
-    print("Test1:ニュース記事で比較")
-    print("all_lower:" + str(all_lower_end-all_lower_start))
-    print("check_lower:" + str(check_islower_end-check_islower_start))
+# print(check_islower_list)
+print("Test1:ニュース記事で比較")
+print("all_lower:" + str(all_lower_end-all_lower_start))
+print("check_lower:" + str(check_islower_end-check_islower_start))
 ```
 
-
-
-
+//todo
 
 もし効率的な判定と変換方法をご存知の方がいらっしゃいましたらコメント頂けると幸いです。
