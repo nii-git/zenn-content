@@ -3,7 +3,7 @@ title: "Pythonで大文字と小文字の変換と速度比較"
 emoji: "🐍"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Python"]
-published: false
+published: true
 ---
 
 ## 概要
