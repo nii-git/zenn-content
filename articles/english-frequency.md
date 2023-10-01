@@ -92,7 +92,7 @@ installed.
 
 We have compiled some common reasons and troubleshooting tips at:
 
-    https://numpy.org/devdocs/user/troubleshooting-importerror.html
+https://numpy.org/devdocs/user/troubleshooting-importerror.html
 
 Please note and check the following:
 
@@ -111,16 +111,17 @@ Traceback (most recent call last):
 Numpyのバージョンは1.25.2を使用しているようですが、公式ドキュメントではPython3.11は対応していると記載されています。
 バージョンの問題では無さそうです。
 
+pomblue’s blogさんの記事によると、どうやらローカルでLambdaのzipファイルを作成したのが悪さしているようです。
+そこで[Lambda用のDocker image](https://hub.docker.com/r/amazon/aws-sam-cli-build-image-python3.9/tags)をpullし、その環境内でzipを作成したところ動作しました。あまりに初見殺しすぎる。
+
+現在、Lambda用のDocker imageはPython3.9までしか無いようなので、仕方なくランタイムもPython3.9にしているという状況です。
+
 > NumPy 1.25.0 リリース
 > 2023年1月17日 – Numpy 1.25.0 がリリースされました。 今回のリリースの目玉機能は次のとおりです。
 > ...(中略)
 > このリリースでサポートされている Python のバージョンは3.3.9 - 3.11 です。
 > https://numpy.org/ja/news/ より引用
 
-pomblue’s blogさんの記事によると、どうやらローカルでLambdaのzipファイルを作成したのが悪さしているようです。
-
-[Lambda用のDocker image](https://hub.docker.com/r/amazon/aws-sam-cli-build-image-python3.9/tags)をpullし、その環境内でzipを作成したところ動作しました。
-あまりに初見殺しすぎる。
 
 > バージョンがどうのこうの、依存関係がどうのこうの言ってるぽい。
 > でもバージョンは正しい。
@@ -131,8 +132,6 @@ pomblue’s blogさんの記事によると、どうやらローカルでLambda�
 > ・Lambdaのdocker imageを利用する
 > pomblue’s blog - Lambdaで外部モジュールを使う方法 より引用 
 > https://pomblue.hatenablog.com/entry/2021/06/08/230146
-
-現在、Lambda用のDocker imageはPython3.9までしか無いようなので、仕方なくランタイムもPython3.9にしているという状況です。
 
 
 #### Beautifulsoup4でxmlパーサーが使えない
@@ -165,6 +164,41 @@ https://zenn.dev/nii/articles/bs4-xml-parser-cannot-use-in-lambda
 検証した結果、手法1の片っ端から小文字化を適用する方が早いことがわかりました。
 検証内容に関しては下記の記事にまとめています。
 https://zenn.dev/nii/articles/lower-upper-comparison
+
+
+### 4.2 RDS(mysql)
+記事の出現回数を格納するためのデータベースです。
+スクレイピングした記事はS3に配置しているため、データベースには入れていません。
+
+#### 採用理由
+データベースの選定でまず決めなくてはならないのは、リレーショナルデータベースかNoSQLかだと思います。
+今回はデータの容量がそこまで多くないことや、個人開発であるためスケーリングをそこまで意識しなくて良いという点を考えリレーショナルデータベースを採用することにしました。
+
+RDBにはMySQLを使用することにしました。
+採用理由はAmazon RDSにMySQLがサポートしているという理由もありますが、使い慣れているという点が大きいです。
+
+750時間/月の無料枠がついてきていることも嬉しいポイントです。
+
+> 無料利用枠は、1 か月あたり 750 インスタンス時間までとなっています。また、1 か月につき 20 GB のデータベースストレージ、1,000万 I/O、20 GB のバックアップストレージも無料で使用可能です。
+> https://aws.amazon.com/jp/rds/free/faqs/
+
+#### セキュリティグループのインバウンドルールを編集
+RDSインスタンスを立ち上げて、適当なEC2インスタンスから接続を試みようとしたところ応答がありませんでした。
+
+```shell
+$ mysql -u admin -p -h <hostname>
+Enter password: 
+********
+
+# 返答がない...
+```
+
+インバウンドルールを編集しなくては繋がらないのを失念していました。
+下記の記事が非常にわかりやすいです。
+https://qiita.com/Yado_Tarou/items/553f60e11b5535050468
+
+
+### 4.3 StepFunction
 
 
 
