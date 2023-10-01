@@ -38,7 +38,7 @@ TOEIC等の試験を批判する意図は一切ありません。
 ## 3. 全体図
 全体の構成図は下記の通りです。
 
-![全体図](/images/english-frequency/english_frequency-aws_latest.drawio.jpg)
+![全体図](/images/english-frequency/english_frequency-aws_latest.jpg)
 
 外部英語ニュースサイトのrssから最新記事を取得するバッチ、記事を解析するバッチはそれぞれLambda(Python3.9)で作成しました。それぞれの実行順序は必ず決まっているため、StepFunctionで1つのステートマシンにまとめました。
 1日1回実行して欲しいので、EventBridgeで定期実行化しています。
@@ -65,7 +65,7 @@ Lambdaを採用する際の注意点として、実行時間は15分以内やメ
 今後、データの収集範囲を広げた場合の影響範囲についても考える必要があります。
 現在の作りでは引数にデータ取得元を指定しているため、さらに上位のStepFunctionを作成してもいいかもしれません。
 
-![今後の構成案](/images/english-frequency/english_frequency-aws_latest.drawio.jpg)
+![今後の構成案](/images/english-frequency/english_frequency-aws_latest.jpg)
 
 
 #### Python 3.9を使用する理由
