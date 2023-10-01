@@ -65,7 +65,7 @@ Lambdaを採用する際の注意点として、実行時間は15分以内やメ
 今後、データの収集範囲を広げた場合の影響範囲についても考える必要があります。
 現在の作りでは引数にデータ取得元を指定しているため、さらに上位のStepFunctionを作成してもいいかもしれません。
 
-![今後の構成案](/images/english-frequency/english_frequency-aws_latest.png)
+![今後の構成案](/images/english-frequency/english_frequency-aws_feature.png)
 
 
 #### Python 3.9を使用する理由
