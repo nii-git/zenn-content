@@ -3,7 +3,7 @@ title: "【個人開発】英字ニュースから単語の出現回数を調べ
 emoji: "💻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["個人開発","英語","AWS","python","lambda","stepfunctions"]
-published: false
+published: true
 ---
 
 ## 1.はじめに
