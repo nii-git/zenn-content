@@ -11,7 +11,7 @@ published: false
 
 最近では様々なドキュメントが翻訳されたり自動翻訳ツールが充実してきたりと便利な世の中になっていますが、まだまだ英語が必要になる場面も多いです。
 
-英語の勉強を始めた人がよく受験するのがTOEICだと思います。私もTOEICの勉強を始め、なんとかレベルB(730~855)のスコアに到達できました。基礎はそこそこ完成できたと考え、少し背伸びして英字ニュースを読んでみたりしました。
+私も英語の必要性を感じてTOEICの勉強を始めました。そこそこ基礎が完成できたと考え、少し背伸びして英字ニュースを読んでみたりしました。
 
 しかし1ヶ月くらいニュースを読んだところ、あることに気づきました。
 
@@ -108,27 +108,26 @@ Traceback (most recent call last):
 Numpyのバージョンは1.25.2を使用しているようですが、公式ドキュメントではPython3.11は対応していると記載されています。
 バージョンの問題では無さそうです。
 
-pomblue’s blogさんの記事によると、どうやらローカルでLambdaのzipファイルを作成したのが悪さしているようです。
-そこで[Lambda用のDocker image](https://hub.docker.com/r/amazon/aws-sam-cli-build-image-python3.9/tags)をpullし、その環境内でzipを作成したところ動作しました。
-
-現在、Lambda用のDocker imageはPython3.9までしか無いようなので、仕方なくランタイムもPython3.9にしているという状況です。
-
 > NumPy 1.25.0 リリース
 > 2023年1月17日 – Numpy 1.25.0 がリリースされました。 今回のリリースの目玉機能は次のとおりです。
 > ...(中略)
 > このリリースでサポートされている Python のバージョンは3.3.9 - 3.11 です。
 > https://numpy.org/ja/news/ より引用
 
+[pomblue’s blogさんの記事](https://pomblue.hatenablog.com/entry/2021/06/08/230146)によると、どうやらローカルでLambdaのzipファイルを作成したのが悪さしているようです。
+そこで[Lambda用のDocker image](https://hub.docker.com/r/amazon/aws-sam-cli-build-image-python3.9/tags)をpullし、その環境内でzipを作成したところ動作しました。
 
-> バージョンがどうのこうの、依存関係がどうのこうの言ってるぽい。
-> でもバージョンは正しい。
-> ローカルでモジュールzip作成やったのがいけないっぽい！
-> LambdaはAmazon Linux(2)で動いているので、
-> ・EC2でAmazon Linux(2)のインスタンスを立てる
-> もしくは
-> ・Lambdaのdocker imageを利用する
-> pomblue’s blog - Lambdaで外部モジュールを使う方法 より引用 
-> https://pomblue.hatenablog.com/entry/2021/06/08/230146
+```実行例
+$ cd /to_lambda_function_path/
+$ docker run -it -v $(pwd):/var/task amazon/aws-sam-cli-build-image-python3.9:latest
+# python3 -m pip install --target ./package numpy
+# cd ./package
+# zip -r ../my_deployment_package.zip .
+# zip ../my_deployment_package.zip ../lambda_function.py
+```
+
+現在、Lambda用のDocker imageはPython3.9までしか無いようなので、仕方なくランタイムもPython3.9にしているという状況です。
+ 
 
 
 #### Beautifulsoup4でxmlパーサーが使えない
@@ -207,7 +206,7 @@ StepFunctionsで2つのLambdaのワークフローを作成しました。
 - `Parameters`を設定すると前のステートの値は全て消える
   - このパラメーターが無いと前ステートの値がそのまま入力になります
   - あった場合は`Parameters`の値で上書きします
-  - 前ステートの値が必要であれば、"$.hoge"のように記載する必要があります
+  - 前ステートの値が必要であれば、`$.hoge`のように記載する必要があります
 - コンソール上でStepFunctionsの実行結果を見た際のステート入出力は**加工前**のもの
   - ここが一番混乱しました
   - コンソールに表示されている値から`Parameters`,`InputPath`の加工が行われたものがステートマシンに入力されます
