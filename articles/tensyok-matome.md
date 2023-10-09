@@ -20,6 +20,16 @@ https://qiita.com/shimi_pro/items/8bc12cb46e32d5cbcb65
 BtoCからの転職、エンジニア&リーダー、28歳
 
 
+# 職務経歴書
+
+---
+
+見たいエンジニアの職務経歴書の書き方
+https://qiita.com/newta/items/77eb14b1d67bc7ef1980
+
+
+# 全般
+
 ---
 
 転職者による、転職者のための、転職者の履歴、業績、面接。転職(2)
