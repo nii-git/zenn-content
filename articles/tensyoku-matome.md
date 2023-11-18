@@ -20,24 +20,6 @@ https://qiita.com/shimi_pro/items/8bc12cb46e32d5cbcb65
 BtoCからの転職、エンジニア&リーダー、28歳
 
 
-# 職務経歴書
-
----
-
-見たいエンジニアの職務経歴書の書き方
-https://qiita.com/newta/items/77eb14b1d67bc7ef1980
-
-上場企業の採用担当者目線で職務経歴書の書き方を説明している
-(面接編)[https://qiita.com/newta/items/63a06516521998ddd9f0]も読んでおくべき
-
----
-
-
-エンジニア採用活動で感じた「もったいない」5選 レジュメ編
-https://qiita.com/dsk_srch/items/8163299066cf5b7039e4
-転職活動日記ではないが、有益な情報のため
-採用担当者目線
-
 
 # 全般
 
@@ -82,6 +64,24 @@ https://zenn.dev/big_tanukiudon/articles/fc478b227b61d9
 Web系→it系。20代後半。
 
 ---
+
+# 職務経歴書
+
+---
+
+見たいエンジニアの職務経歴書の書き方
+https://qiita.com/newta/items/77eb14b1d67bc7ef1980
+
+上場企業の採用担当者目線で職務経歴書の書き方を説明している
+(面接編)[https://qiita.com/newta/items/63a06516521998ddd9f0]も読んでおくべき
+
+---
+
+
+エンジニア採用活動で感じた「もったいない」5選 レジュメ編
+https://qiita.com/dsk_srch/items/8163299066cf5b7039e4
+転職活動日記ではないが、有益な情報のため
+採用担当者目線
 
 
 # 面接
