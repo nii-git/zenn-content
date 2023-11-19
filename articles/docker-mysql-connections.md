@@ -18,7 +18,7 @@ services:
     image: mysql:8.2.0
 ```
 
----
+## はじめに
 
 docker-composeを用いて、golangのAPIサーバーとmysqlを接続する際に2点詰まったところがあるので備忘録として残しておきます。
 
@@ -48,7 +48,7 @@ services:
 `api`コンテナでは、`go-mysql-driver`を用いて下記のように接続します。
 
 ```go:api
-db, err = sql.Open("mysql","[username[:password]@][protocol[(address)]]/dbname")
+db, err = sql.Open("mysql","[root[:password]@][tcp[(localhost:3306)]]/sample_db")
 ```
 
 ここで`address`にlocalhost:3306と記載すると、`dial tcp 127.0.0.1:3306: connect: connection refused`エラーが発生します。
@@ -56,7 +56,7 @@ db, err = sql.Open("mysql","[username[:password]@][protocol[(address)]]/dbname")
 これは`mysql`コンテナがlocalhost(≒127.0.0.1)ではないことが原因です。
 `docker inspect`コマンドで`mysql`コンテナを調べてみたところ、`172.19.0.2`であることがわかりました（ここの値は実行するたびに書き変わるようです）。
 
-```sh
+```txt
 $ docker inspect {mysqlContainerID}
 {
 	...
@@ -70,17 +70,15 @@ $ docker inspect {mysqlContainerID}
 
 `addresss`にdocker-compose.ymlファイル内で記載したmysqlのservice名を指定すると、動的に`mysql`コンテナのIPに書き換えてくれます。
 
-今回の例ですと、address=mysqlContainerとなります。書き換えて実行すると、接続先が`172.19.0.3`と書き変わっています。
+今回の例ですと、`address = mysqlContainer`となります。書き換えて実行すると、接続先が`172.19.0.3`と書き変わっています。
 
 ```go:api
-db, err = sql.Open("mysql","[root[:password]@][tcp[(mysqlContainer)]]/sample_db")
+db, err = sql.Open("mysql","[root[:password]@][tcp[(mysqlContainer:3306)]]/sample_db")
 ```
 
 ```txt:実行結果
 dial tcp 172.19.0.3:3306: connect: connection refused
 ```
-
----
 
 接続先IPは書き換わりましたが、mysqlサーバーの準備ができる前に接続を行なっているためにエラーが発生しています。その際の対応を次項で説明します。
 
@@ -134,5 +132,42 @@ docker-composeには起動順序を指定できる[depends_on](https://docs.dock
 ![connection解消例](/images/others/docker-mysql-connections2.png)
 
 ## 実行結果
+下記のコードを用いて実行してみます。
+https://github.com/nii-git/zenn-content/tree/main/sample/docker-mysql-connections
 
-## サンプルコード
+ API接続1回目では失敗していますが、接続先が`172.21.0.2:3306`となっており動的にIPが書き換えられていることがわかります。
+
+```txt:実行結果(1)
+$ docker-compose up
+[+] Building 4.2s (10/10) FINISHED       
+...
+Attaching to docker-mysql-connections-api-1, docker-mysql-connections-mysqlContainer-1
+docker-mysql-connections-api-1             | NewDB Connection Attept #1
+docker-mysql-connections-api-1             | NewDB Connection Error:dial tcp 172.21.0.2:3306: connect: connection refused
+```
+
+mysqlサーバーが起動しましたが、まだ準備は完了していません。
+その間にAPIサーバーが２度目の接続を試みますが、当然拒否されてしまいます。
+
+```txt:実行結果(2)
+docker-mysql-connections-mysqlContainer-1  | 2023-11-19 05:09:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.2.0-1.el8 started.
+...
+docker-mysql-connections-api-1             | NewDB Connection Attept #2
+docker-mysql-connections-api-1             | NewDB Connection Error:dial tcp 172.21.0.2:3306: connect: connection refused
+```
+
+mysqlサーバーがsample_dbデータベースを作成し、その後`ready for connections`メッセージを出力しました。
+その直後にAPIサーバーが10回目の接続を試みた際、無事成功しています。
+
+```txt:実行結果(3)
+docker-mysql-connections-mysqlContainer-1  | 2023-11-19 05:09:43+00:00 [Note] [Entrypoint]: Creating database sample_db
+...
+docker-mysql-connections-api-1             | NewDB Connection Attept #9
+docker-mysql-connections-api-1             | NewDB Connection Error:dial tcp 172.21.0.2:3306: connect: connection refused
+...
+docker-mysql-connections-mysqlContainer-1  | 2023-11-19T05:09:45.621827Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.2.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+docker-mysql-connections-api-1             | NewDB Connection Attept #10
+docker-mysql-connections-api-1             | NewDB Connection Succeeded!
+docker-mysql-connections-api-1 exited with code 0
+```
+
