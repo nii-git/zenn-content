@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mysqlContainer:
+    image: mysql:8.2.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+  api:
+    build:
+      context: .
+    ports:
+      - "1323:1323"
