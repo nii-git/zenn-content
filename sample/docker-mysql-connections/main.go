@@ -37,7 +37,7 @@ func main() {
 
 	var db *sql.DB
 
-	for r := 1; r < MaxDBRetryCount; r++ {
+	for r := 1; r <= MaxDBRetryCount; r++ {
 		println("NewDB Connection Attept #" + strconv.Itoa(r))
 		db, err = sql.Open("mysql", c.FormatDSN())
 		if err != nil {
