@@ -1,9 +1,9 @@
 ---
-title: "【Golang】同一docker-composeファイル内にあるMySQLサーバーに接続する方法"
+title: "【golang】同一docker-composeファイル内にあるMySQLサーバーに接続する方法"
 emoji: "🐬"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["docker","go","dockercompose","mysql"]
-published: false
+published: true
 ---
 
 ## TL;DR
