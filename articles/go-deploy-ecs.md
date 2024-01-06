@@ -52,7 +52,7 @@ Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/artic
   - https://ap-northeast-1.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-1#subnets
 - サブネットを作成を選択
 - 新しいサブネットを追加を選択
-  - VPC ID: 1.1で作成したVPC
+- VPC ID: 1.1で作成したVPCを選択
 - サブネット 1 (2 個中)を下記のように設定
   - サブネット名: 好きな名前
   - アベイラビリティーゾーン: ap-northeast-1a
@@ -66,14 +66,21 @@ Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/artic
 
 
 ### 1.3 パブリックルートテーブル作成
+- VPC > 仮想プライベートクラウド > ルートテーブルに移動
+  - https://ap-northeast-1.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-1#RouteTables
+- ルートテーブルを作成を選択
+- 下記のように設定
+  - 名前: 好きな名前
+  - VPC: 1.1で作成したVPCを選択
+- 作成後、作成したルートテーブルを選択 > アクション > サブネットの関連付けを編集 を選択
+- 1.2で作成したサブネットを選択し、保存
 
-
-### 1.3 プライベートサブネット作成
+### 1.4 プライベートサブネット作成
 - VPC > 仮想プライベートクラウド > サブネットに移動
   - https://ap-northeast-1.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-1#subnets
 - サブネットを作成を選択
 - 新しいサブネットを追加を選択
-  - VPC ID: 1.1で作成したVPC
+- VPC ID: 1.1で作成したVPCを選択
 - サブネット 1 (2 個中)を下記のように設定
   - サブネット名: 好きな名前
   - アベイラビリティーゾーン: ap-northeast-1a
@@ -86,4 +93,42 @@ Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/artic
   - IPv4 subnet CIDR block: `172.16.40.0/24`
 
 
-###
+### 1.5 プライベートルートテーブル作成
+- VPC > 仮想プライベートクラウド > ルートテーブルに移動
+  - https://ap-northeast-1.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-1#RouteTables
+- ルートテーブルを作成を選択
+- 下記のように設定
+  - 名前: 好きな名前
+  - VPC: 1.1で作成したVPCを選択
+- 作成後、作成したルートテーブルを選択 > アクション > サブネットの関連付けを編集 を選択
+- 1.4で作成したサブネットを選択し、保存
+
+### 1.6 インターネットゲートウェイを作成
+- VPC > 仮想プライベートクラウド > インターネットゲートウェイに移動
+  - https://ap-northeast-1.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-1#igws
+- インターネットゲートウェイの作成を選択
+- 下記のように設定
+  -  名前: 好きな名前
+-  作成後、作成したインターネットゲートウェイを選択 > アクション > VPCにアタッチを選択
+-  VPC: 1.1で選択したVPC を選択
+
+
+### 1.7 現在の状態図
+![現在の状態](/images/go-deploy-ecs/go-deploy-ecs1.jpg)
+
+//todo:public ルートテーブル
+
+## 2. ドメイン設定
+### 2.1 ドメイン取得
+- Route53 > ドメイン > ドメインを登録に移動
+  - https://us-east-1.console.aws.amazon.com/route53/domains/home?region=ap-northeast-1#/
+- ドメインを登録を選択
+- 使用したいドメインを入力
+- 期間、自動更新の有無を入力
+- 連絡先情報を入力
+
+### 2.2 証明書を作成
+- AWS Certificate Manager > 証明書一覧に移動
+  - https://ap-northeast-1.console.aws.amazon.com/acm/home?region=ap-northeast-1#/certificates/list
+- ホストゾーンの作成を選択
+- 
