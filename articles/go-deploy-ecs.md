@@ -3,7 +3,7 @@ title: "DockerコンテナをECS Fargateにデプロイする"
 emoji: "💻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ecs","fargate","vpc"]
-published: false
+published: true
 ---
 
 ## 概要
