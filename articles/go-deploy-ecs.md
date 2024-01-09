@@ -1,22 +1,16 @@
 ---
-title: "GoのEchoフレームワークで作成したコンテナをECS Fargateにデプロイする"
+title: "[備忘録]ECS Fargateにデプロイする"
 emoji: "💻"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["go","aws","echo","ecs","fargate","vpc"]
+topics: ["aws","ecs","fargate","vpc"]
 published: false
 ---
 
-ねむい。ちゃんと推敲すること。
-
 ## 概要
-Go言語のEchoフレームワークを用いて開発をした際、どのようにECS Fargateにデプロイするかまとめた記事です。
-バックエンドはわかるけど、ネットワークが全くわからない...という方を対象にしています。
+ローカルで動かしていたコンテナをECSにデプロイし、外部からアクセスできるようにする方法をまとめた記事です。
+既にローカルで動作するdockerファイルがあることを想定しているため、本記事ではdockerの作成方法は記載しません。
 
-ローカルで動かしていたEchoフレームワークをデプロイし、外部からアクセスできるようにする
-
-前提で、ローカルにdockerファイルがあることを想定
-
-// 混ぜてもいいかも注意点と概要　眠いんだ　朝4時から書いてるんだ
+<!-- 混ぜてもいいかも注意点と概要　眠いんだ　朝4時から書いてるんだ -->
 
 ## 注意点
 今回の構成ではECSとRDSをpublic subnetに配置している点に注意してください。
@@ -24,13 +18,11 @@ Go言語のEchoフレームワークを用いて開発をした際、どのよ�
 よりセキュアな構成にする場合は、ECSやRDSをprivate subnetに移動させることを検討してください。
 Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/articles/privatesubnet_ecs/)の作成が必要です。
 
-また、コンソール状でぽちぽちやっているため、IaCで作成したい方には　//TODO
-
 記事中のurlは基本的にregionが`ap-northeast-1`のものになっています。
 他のリージョンで作成する方はリンクを踏まずに実施してください。
 
 ## 構成図
-
+![現在の状態](/images/go-deploy-ecs/go-deploy-ecs5.jpg)
 
 ## 1. VPC設定
 
@@ -232,7 +224,17 @@ Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/artic
   - 証明書(ACMから): 2.2で作成した証明書
 
 
-### 3.6 現在の状態図
+### 3.6 Aレコードの作成
+- Route53 > ホストゾーン > 2.1で作成したホストゾーンを選択
+- レコードを作成を選択
+- 下記のように設定
+  - レコード名: 空白
+  - レコードタイプ: A - IPv4アドレスと一部のAWSリソースにトラフィックを...
+  - エイリアス: チェックを入れる
+  - トラフィックのルーティング先: Application Load BalancerとClassic Load Balancerへのエイリアス、東京リージョン、3.5で作成したELBを選択
+
+
+### 3.7 現在の状態図
 ![現在の状態](/images/go-deploy-ecs/go-deploy-ecs3.jpg)
 
 
@@ -260,3 +262,75 @@ docker push {ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/{APP_NAME}
 
 ### 4.3 現在の状態図
 ![現在の状態](/images/go-deploy-ecs/go-deploy-ecs4.jpg)
+
+
+## 5. ECS設定
+### 5.1 ECSロールの作成
+- IAM > アクセス管理 > ロールに移動
+  - https://us-east-1.console.aws.amazon.com/iam/home?region=ap-northeast-1#/roles
+- ロールを作成を選択
+- 下記のように設定
+  - 信頼されたエンティティタイプ: AWSのサービス
+  - サービスまたはユースケース: Elastic Container Service
+  - ユースケース: Elastic Container Service Task
+  - 許可ポリシー: AmazonECSTaskExecutionRolePolicy
+  - ロール名: 好きな名前
+
+
+### 5.2 クラスターの作成
+- Amazon Elastic Container Service > クラスターを選択
+  - https://ap-northeast-1.console.aws.amazon.com/ecs/v2/clusters?region=ap-northeast-1
+- クラスターの作成を選択
+- 下記のように設定
+  - クラスター名: 好きな名前
+  - インフラストラクチャ: AWS Fargate
+
+
+### 5.3 タスク定義の作成
+- Amazon Elastic Container Service > タスク定義を選択
+  - https://ap-northeast-1.console.aws.amazon.com/ecs/v2/task-definitions?region=ap-northeast-1
+- 新しいタスク定義の作成 > 新しいタスク定義の作成を選択
+- 下記のように設定
+  - タスク定義ファミリー: 好きな名前
+  - 起動タイプ: AWS Fargate
+  - オペレーティングシステム/アーキテクチャ: Linux/X86_64
+  - ネットワークモード: awsvpc
+  - CPU,メモリ: 好きなサイズ
+  - タスクロール,タスク実行ロール: 5.1で作成したロール
+  - コンテナの詳細_名前: 好きな名前
+  - コンテナの詳細_イメージURI: 4.3でプッシュしたECRのURI
+  - コンテナの詳細_必須コンテナ: はい
+  - コンテナポート,プロトコル: 80,tcp
+  - その他はデフォルトのまま
+
+### 5.4 サービスの作成
+- Amazon Elastic Container Service > クラスター > 5.2で作成したクラスターを選択
+- サービス > 作成を選択
+- 下記のように設定
+  - コンピューティングオプション: 起動タイプ
+  - 起動タイプ: FARGATE
+  - プラットフォームのバージョン: 1.4.0
+  - アプリケーションタイプ: サービス
+  - ファミリー: 5.3で作成したタスク
+  - リビジョン: 最新のもの
+  - サービス名: 好きな名前
+  - サービスタイプ: レプリカ
+  - 必要なタスク: 好きな数
+- ネットワーキングを選択し、下記のように設定
+  - VPC: 1.1で作成したVPC
+  - サブネット: 1.2で作成した2個のサブネット
+  - セキュリティグループ: 既存のセキュリティグループを使用、3.3で作成したセキュリティグループを選択
+  - パブリックIP: オンになっています
+- ロードバランシングを選択し、下記のように設定
+  - ロードバランサーの種類: Application Load Balancer
+  - Application Load Balancer: 既存のロードバランサーを使用、3.5で作成したロードバランサーを選択
+  - リスナー: 既存のリスナーを使用、443:HTTPS
+  - ターゲットグループ: 既存のターゲットグループを使用、3.4で作成したターゲットグループを選択
+
+
+### 5.5 現在の状態図
+![現在の状態](/images/go-deploy-ecs/go-deploy-ecs5.jpg)
+
+
+## 6. さいごに
+登録したドメインにアクセスし、正しく表示されることを確認してください。
