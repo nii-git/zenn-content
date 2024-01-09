@@ -1,5 +1,5 @@
 ---
-title: "[備忘録]ECS Fargateにデプロイする"
+title: "DockerコンテナをECS Fargateにデプロイする"
 emoji: "💻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ecs","fargate","vpc"]
@@ -15,8 +15,7 @@ published: false
 ## 注意点
 今回の構成ではECSとRDSをpublic subnetに配置している点に注意してください。
 
-よりセキュアな構成にする場合は、ECSやRDSをprivate subnetに移動させることを検討してください。
-Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/articles/privatesubnet_ecs/)の作成が必要です。
+よりセキュアな構成にする場合は、ECSやRDSをprivate subnetに移動させることを検討してください。Natゲートウェイや[エンドポイント](https://dev.classmethod.jp/articles/privatesubnet_ecs/)の作成が必要です。
 
 記事中のurlは基本的にregionが`ap-northeast-1`のものになっています。
 他のリージョンで作成する方はリンクを踏まずに実施してください。
@@ -334,3 +333,7 @@ docker push {ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/{APP_NAME}
 
 ## 6. さいごに
 登録したドメインにアクセスし、正しく表示されることを確認してください。
+ECSタスクが起動失敗した場合、下記のランブックで診断してください。
+
+https://docs.aws.amazon.com/ja_jp/systems-manager-automation-runbooks/latest/userguide/automation-aws-troubleshootecstaskfailedtostart.html
+
