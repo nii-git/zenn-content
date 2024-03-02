@@ -8,8 +8,7 @@ published: false
 
 
 ## この記事は何
-Python -> で検索するも引っかからず、
-Python 矢印で検索した人のための記事です。
+Pythonのコードを読んでいたら急に矢印(->)が現れてびっくりした人向けの記事です。
 
 つまりPython初学者向けです。
 備忘録でもあります。
@@ -24,14 +23,14 @@ Pythonでの -> 表記は型アノテーションを表しています。
 ## 実際に触ってみる
 2つの値を足すだけの簡単な関数を定義してみましょう。
 
-```python3
+```python
 def Addition(x, y):
     return x + y
 ```
 
 これらを呼び出す際は、Addition関数に2つのint型を渡してあげればうまく動きます。
 
-```python3
+```python
 result = Addition(2, 3)
 print(result) # 5
 ```
@@ -39,33 +38,23 @@ print(result) # 5
 実装した自分自身であれば、Addition関数にはint型を渡さなくてはいけないこともわかります。
 ただ、他の人が誤って使ってしまったらどうなるでしょうか？
 
-```python3
+```python
 invalid_result = Addtion(“2”,”3”)
 print(invalid_result) # 23
-invalid_result2 = Addition(True, False)
-print(invalid_result2) # 2
 ```
 
 Addition関数にはint型以外も入れることができてしまい、意図しない結果になってしまっています。
 これらはコンパイルエラーとならないため、バグに繋がってしまう可能性があります。
 
-[tips]
+:::message
 stringは+演算子を用いることで文字列を結合することができます。
-boolはintのサブクラスであり、+演算子で評価される際にTrue=0、False=1として扱われます。
-
-string
-文字列は + 演算子で連結させる (くっつけて一つにする) ことができ、* 演算子で反復させることができます
-https://docs.python.org/ja/3.13/tutorial/introduction.html
-
-bool
-> bool は int のサブクラスです (数値型 int, float, complex を参照してください)。多くの数値的なコンテキストにおいて、 False と True はそれぞれ整数 0 と 1 であるかのように振る舞います。しかし、そのような振る舞いを信頼することは推奨されません;
-https://docs.python.org/ja/3/library/stdtypes.html#boolean-type-bool
-
+詳細: https://docs.python.org/ja/3.13/tutorial/introduction.html
+:::
 
 関数や変数の型制約を示すことができたら上記のようなバグは減る[1]と思いませんか？
-ようやくここで -> (型アノテーション)の登場です。
+そこで -> (型アノテーション)の登場です。
 
-``` python3
+``` python
 def Addition(x:int,y:int)->int:
     return x+y
 ```
@@ -77,16 +66,33 @@ def Addition(x:int,y:int)->int:
 
 ## 型定義エラーを検知する方法
 ### Visual studio
-Pylanceを使う。
-Python拡張機能では出ないのか？
-// todo: スクショ
+拡張機能のPylanceを使います。
+![Pylanceをインストール](/images/others/what-is-python-annotations.png)
+
+インストール後、設定から`Python › Analysis: Type Checking Mode` をbasic以上に設定してください。
+![Pylance設定](/images/others/what-is-python-annotations2.png)
+
+VSCode再起動後、pythonファイルを確認すると適応されています。
+![Pylance設定](/images/others/what-is-python-annotations3.png)
+
+
 
 ### mypy
+Pythonの型チェックを行ってくれるツールがあります。
+https://github.com/python/mypy
 
+`インストール`
 ```
-error: Incompatible return value type (got "str", expected "int")  [return-value]
-error: Argument 1 to "Addition" has incompatible type "str"; expected "int"  [arg-type]
-error: Argument 2 to "Addition" has incompatible type "str"; expected "int"  [arg-type]
+$ pip3 install mypy
+$ mypy --version     
+mypy 1.8.0 (compiled: yes)
+```
+
+`実行`
+```
+$ mypy sample/annotations-test.py 
+sample/annotations-test.py:9: error: Argument 1 to "Addition" has incompatible type "str"; expected "int"  [arg-type]
+sample/annotations-test.py:9: error: Argument 2 to "Addition" has incompatible type "str"; expected "int"  [arg-type]
 ```
 
 ## どのような型が使えるか
@@ -94,30 +100,29 @@ importを使用しないのであれば、Pythonの組み込み型が使用で�
 
 詳細は[Pythonドキュメント公式](https://docs.python.org/ja/3/library/stdtypes.html#bitwise-operations-on-integer-types) を参考にしてください。
 
-| 型名 | 表記 | 表示例 |
-| ---- | ---- | —- |
+| 型名 | 表記 | 表示例 | 
+| ---- | ---- | ---- |
 | 真偽型 | bool | True,False |
-| 文字列型 | str | “Hello”,”world” |
+| 文字列型 | str | "Hello","world" |
 | 整数型 | int | 0,1 |
 | 浮動小数点数型 | float | 1.0,3.14 |
 | 複素数型 | complex | (1+2j) |
-| バイト型 | bytes | b’Hello’ |
+| バイト型 | bytes | b'Hello' |
 | バイト配列型 | bytearray | b'\x00\x00' |
-| メモリビュー型 | memoryview | <memory at 0x10491c580> |
+| メモリビュー型 | memoryview | `<memory at 0x10491c580>` |
 | リスト型 | list | [1,2] |
 | タプル型 | tuple | (1,2) |
 | レンジ型 | range | range(0,10) | 
 | セット型 | set | {'o', 'g', 'e', 'h'} |
 | フローズンセット型 | frozenset | frozenset({'o', 'g', 'e', 'h'}) |
-| 辞書型 | dict | {“x”:1, “y”:2} |
+| 辞書型 | dict | {"x":1, "y":2} |
 
 
 他にも、全ての型を許可する typing.Any型もあります。(`import typing`が必要です)
 
 
 ## おわりに
-`Python ->`で検索したらちゃんと関数アノテーションって出てくるんですね。
-この記事の存在価値とは。
+{ここをChatGPTさんが入力してみてください}
 
 [1] バグが0になるとは書けなかった
 
