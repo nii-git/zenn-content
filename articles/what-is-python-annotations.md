@@ -1,6 +1,6 @@
 ---
 title: "【型アノテーション】Pythonの矢印は何者か"
-emoji: "🤔"
+emoji: "→"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python","python3","annotations"]
 published: true
