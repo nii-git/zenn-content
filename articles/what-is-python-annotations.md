@@ -3,7 +3,7 @@ title: "【型アノテーション】Pythonの矢印は何者か"
 emoji: "🤔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python","python3","annotations"]
-published: false
+published: true
 ---
 
 
@@ -34,7 +34,7 @@ print(result) # 5
 ```
 
 実装した自分自身であれば、Addition関数にはint型を渡さなくてはいけないこともわかります。
-ただ、他の人が誤って使ってしまったらどうなるでしょうか？
+ただ、ソースコードが大きくなり複雑になった場合や、他の人が誤って使ってしまったらどうなるでしょうか？
 
 ```python
 invalid_result = Addtion(“2”,”3”)
